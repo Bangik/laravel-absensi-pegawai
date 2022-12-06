@@ -37,6 +37,19 @@ jobs:
   laravel-build:
     runs-on: ubuntu-latest
     needs: laravel-tests
+    services: # Service container Mysql
+      mysql: # Label used to access the service container
+        image: mysql:5.7
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE:  laravel-absensi-pegawai
+        ports:
+          - 33306:3306
+        options: >-  # Set health checks to wait until mysql database has started (it takes some seconds to start)
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
     steps:
     - uses: actions/checkout@v3
     - name: Setup PHP
@@ -53,14 +66,7 @@ jobs:
       run: php artisan key:generate
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
-    - name: Create Database
-      run: |
-        mkdir -p database
-        touch database/database.sqlite
-    - name: Build
-      run: php artisan build
-    - name: Upload build
-      uses: actions/upload-artifact@v2
-      with:
-        name: build
-        path: build
+    - name: Clear Config
+        run: php artisan config:clear
+    - name: Run Migration
+      run: php artisan migrate --force
