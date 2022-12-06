@@ -1,23 +1,70 @@
-@extends('layouts.app')
-
+@extends('layouts.home')
+@section('title')
+    Home - {{ config('app.name') }}
+@endsection
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
-                </div>
-            </div>
+    @if ($libur)
+        <div class="text-center">
+            <p>Absen Libur (Hari Libur Nasional {{ $holiday }})</p>
         </div>
-    </div>
-</div>
+    @else
+        @if (date('l') == "Saturday" || date('l') == "Sunday")
+            <div class="text-center">
+                <p>Absen Libur</p>
+            </div>
+        @else
+            @if ($present)
+                @if ($present->keterangan == 'Alpha')
+                    <div class="text-center">
+                        @if (strtotime(date('H:i:s')) >= strtotime(config('absensi.jam_masuk') .' -1 hours') && strtotime(date('H:i:s')) <= strtotime(config('absensi.jam_pulang')))
+                            <p>Silahkan Absen Datang</p>
+                            <form action="#" method="post">
+                                @csrf
+                                <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                                <button class="btn btn-primary" type="submit">Absen Datang</button>
+                            </form>
+                        @else
+                            <p>Absen Datang Belum Tersedia</p>
+                        @endif
+                    </div>
+                @elseif($present->keterangan == 'Cuti')
+                    <div class="text-center">
+                        <p>Anda Sedang Cuti</p>
+                    </div>
+                @else
+                    <div class="text-center">
+                        <p>
+                            Absen Datang hari ini pukul : ({{ ($present->jam_masuk) }})
+                        </p>
+                        @if ($present->jam_keluar)
+                            <p>Absen Pulang hari ini pukul : ({{ $present->jam_keluar }})</p>
+                        @else
+                            @if (strtotime('now') >= strtotime(config('absensi.jam_pulang')))
+                                <p>Jika pekerjaan telah selesai silahkan Absen Pulang</p>
+                                <form action="#" method="post">
+                                    @csrf @method('patch')
+                                    <button class="btn btn-primary" type="submit">Absen Pulang</button>
+                                </form>
+                            @else
+                                <p>Absen Pulang Belum Tersedia</p>
+                            @endif
+                        @endif
+                    </div>
+                @endif
+            @else
+                <div class="text-center">
+                    @if (strtotime(date('H:i:s')) >= strtotime(config('absensi.jam_masuk') . ' -1 hours') && strtotime(date('H:i:s')) <= strtotime(config('absensi.jam_pulang')))
+                        <p>Silahkan Absen Datang</p>
+                        <form action="#" method="post">
+                            @csrf
+                            <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                            <button class="btn btn-primary" type="submit">Absen Datang</button>
+                        </form>
+                    @else
+                        <p>Absen Datang Belum Tersedia</p>
+                    @endif
+                </div>
+            @endif
+        @endif
+    @endif
 @endsection

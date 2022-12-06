@@ -17,7 +17,7 @@ class CreatePresentsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->enum('status',['Masuk','Alpha','Telat','Sakit','Cuti']);
-            $table->date('date');
+            $table->date('dates');
             $table->time('time_in');
             $table->time('time_out');
             $table->timestamps();
