@@ -44,7 +44,7 @@ jobs:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE:  laravel-absensi-pegawai
         ports:
-          - 33306:3306
+          - 3306:3306
         options: >-  # Set health checks to wait until mysql database has started (it takes some seconds to start)
           --health-cmd="mysqladmin ping"
           --health-interval=10s
