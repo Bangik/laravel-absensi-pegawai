@@ -45,6 +45,8 @@ jobs:
         php-version: '7.4'
         extensions: mbstring, intl, gd, xml, zip, dom, curl, fileinfo, json, iconv, bcmath, ctype, exif, ftp, iconv, mysqli, pdo_mysql, pdo_sqlite, tokenizer, xmlwriter, xsl, zip
         coverage: none
+    - name: Copy .env
+      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
     - name: Install Dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     - name: Generate key
