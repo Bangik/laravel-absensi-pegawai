@@ -132,7 +132,7 @@ Kehadiran - {{ config('app.name') }}
                                 @foreach ($presents as $present)
                                     <tr>
                                         <th>{{ $rank++ }}</th>
-                                        <td><a href="#">{{ $present->user->nrp }}</a></td>
+                                        <td><a href="{{ route('users.show',$present->user) }}">{{ $present->user->nrp }}</a></td>
                                         <td>{{ $present->user->nama }}</td>
                                         <td>{{ $present->keterangan }}</td>
                                         @if ($present->jam_masuk)

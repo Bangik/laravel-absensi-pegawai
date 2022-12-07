@@ -105,10 +105,10 @@
 
                         @if (Request::segment(1) == 'users')
                             <li class="nav-item active">
-                            <a class="nav-link active" href="#">
+                            <a class="nav-link active" href="{{ route('users.index') }}">
                         @else
                             <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="{{ route('users.index') }}">
                         @endif
                                 <i class="ni ni-circle-08 text-primary"></i> Users
                             </a>
