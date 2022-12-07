@@ -11,8 +11,9 @@ class Present extends Model
 
     protected $fillable = [
         'user_id',
-        'date',
-        'time',
+        'dates',
+        'time_in',
+        'time_out',
         'status',
     ];
 
