@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PresentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +21,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::group(['middleware' => ['web', 'auth']], function(){
+    Route::group(['middleware' => ['role:admin']], function(){
+        Route::get('/kehadiran', [PresentController::class, 'index'])->name('kehadiran.index');
+    });
+});

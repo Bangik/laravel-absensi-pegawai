@@ -76,7 +76,7 @@
                     @endrole
                     <li class="nav-item">
                         @role('admin')
-                            <a class="nav-link nav-link-icon" href="#">
+                            <a class="nav-link nav-link-icon" href="{{ route('kehadiran.index') }}">
                         @else
                             <a class="nav-link nav-link-icon" href="#">
                         @endrole
