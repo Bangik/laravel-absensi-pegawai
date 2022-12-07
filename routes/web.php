@@ -25,5 +25,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::group(['middleware' => ['web', 'auth']], function(){
     Route::group(['middleware' => ['role:admin']], function(){
         Route::get('/kehadiran', [PresentController::class, 'index'])->name('kehadiran.index');
+        Route::get('/kehadiran/cari', [PresentController::class, 'search'])->name('kehadiran.search');
+        Route::post('kehadiran', [PresentController::class, 'store'])->name('kehadiran.store');
     });
 });

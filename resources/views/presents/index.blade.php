@@ -92,7 +92,7 @@ Kehadiran - {{ config('app.name') }}
             <div class="card-body">
                 <div class="row">
                     <div class="col-lg-6 mb-1">
-                        <form action="#" method="get">
+                        <form action="{{ route('kehadiran.search') }}" method="get">
                             <div class="form-group row">
                                 <label for="tanggal" class="col-form-label col-sm-3">Tanggal</label>
                                 <div class="input-group col-sm-9">
