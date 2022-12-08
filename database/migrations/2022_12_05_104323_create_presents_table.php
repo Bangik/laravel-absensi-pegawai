@@ -18,8 +18,8 @@ class CreatePresentsTable extends Migration
             $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->enum('status',['Masuk','Alpha','Telat','Sakit','Cuti']);
             $table->date('dates');
-            $table->time('time_in');
-            $table->time('time_out');
+            $table->time('time_in')->nullable();
+            $table->time('time_out')->nullable();
             $table->timestamps();
         });
     }

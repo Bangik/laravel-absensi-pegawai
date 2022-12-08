@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PresentController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +22,13 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::group(['middleware' => ['web', 'auth']], function(){
+    Route::group(['middleware' => ['role:admin']], function(){
+        Route::resource('users', UserController::class);
+
+        Route::get('/kehadiran', [PresentController::class, 'index'])->name('kehadiran.index');
+        Route::get('/kehadiran/cari', [PresentController::class, 'search'])->name('kehadiran.search');
+        Route::post('kehadiran', [PresentController::class, 'store'])->name('kehadiran.store');
+    });
+});

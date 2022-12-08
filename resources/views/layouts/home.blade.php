@@ -68,7 +68,7 @@
                 <ul class="navbar-nav ml-auto">
                     @role('admin')
                         <li class="nav-item">
-                            <a href="#" class="nav-link nav-link-icon">
+                            <a href="{{ route('users.index') }}" class="nav-link nav-link-icon">
                                 <i class="ni ni-circle-08"></i>
                                 <span class="nav-link-inner--text">Users</span>
                             </a>
@@ -76,7 +76,7 @@
                     @endrole
                     <li class="nav-item">
                         @role('admin')
-                            <a class="nav-link nav-link-icon" href="#">
+                            <a class="nav-link nav-link-icon" href="{{ route('kehadiran.index') }}">
                         @else
                             <a class="nav-link nav-link-icon" href="#">
                         @endrole
