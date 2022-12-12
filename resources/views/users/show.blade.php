@@ -117,7 +117,7 @@ Detail User - {{ config('app.name') }}
                                         <button type="submit" class="btn btn-sm btn-danger" title="Hapus" onclick="return confirm('Apakah anda yakin ingin menghapus user ini ???')"><i class="fas fa-trash"></i></button>
                                     </form>
                                 @endif
-                                <form class="d-inline-block" action="#" method="post">
+                                <form class="d-inline-block" action="{{ route('users.password',$user) }}" method="post">
                                     @csrf @method('patch')
                                     <button type="submit" class="btn btn-sm btn-dark" onclick="return confirm('Apakah anda yakin ingin mereset password user ini ???')">Reset Password</button>
                                 </form>

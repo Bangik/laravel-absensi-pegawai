@@ -16,14 +16,14 @@ Ubah User - {{ config('app.name') }}
                         @method('patch')
                         @csrf
                         <div class="text-center mb-3">
-                            <img id="image" src="{{ asset(Storage::url($user->foto)) }}" alt="{{ $user->foto }}" class="img-thumbnail mb-1">
+                            <img id="image" src="{{ asset(Storage::url($user->avatar)) }}" alt="{{ $user->avatar }}" class="img-thumbnail mb-1">
                         </div>
                         <div class="form-group row">
-                            <div class="col-sm-2"><label for="foto" class="float-right col-form-label">Foto</label></div>
+                            <div class="col-sm-2"><label for="avatar" class="float-right col-form-label">Foto</label></div>
                             <div class="col-sm-10">
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="foto" name="foto">
-                                    <label class="custom-file-label" for="foto">Ubah Foto</label>
+                                    <input type="file" class="custom-file-input" id="avatar" name="avatar">
+                                    <label class="custom-file-label" for="avatar">Ubah Foto</label>
                                 </div>
                             </div>
                         </div>
@@ -35,10 +35,17 @@ Ubah User - {{ config('app.name') }}
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-sm-2"><label for="nama" class="float-right col-form-label">Nama</label></div>
+                            <div class="col-sm-2"><label for="name" class="float-right col-form-label">Nama</label></div>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" value="{{ $user->nama }}">
-                                @error('nama') <span class="invalid-feedback" role="alert">{{ $message }}</span> @enderror
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}">
+                                @error('name') <span class="invalid-feedback" role="alert">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-2"><label for="email" class="float-right col-form-label">Email</label></div>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}">
+                                @error('email') <span class="invalid-feedback" role="alert">{{ $message }}</span> @enderror
                             </div>
                         </div>
                         <div class="form-group row">
@@ -46,8 +53,9 @@ Ubah User - {{ config('app.name') }}
                             <div class="col-sm-10">
                                 <select class="form-control @error('role') is-invalid @enderror" name="role" id="role">
                                     <option value="">Pilih</option>
-                                    <option value="1" {{ old('role',$user->role_id) == 1 ? 'selected' : '' }}>Admin</option>
-                                    <option value="2" {{ old('role',$user->role_id) == 2 ? 'selected' : '' }}>Pegawai</option>
+                                    @foreach ($roles as $role)
+                                        <option value="{{$role}}" >{{$role}}</option>
+                                    @endforeach
                                 </select>
                                 @error('role') <span class="invalid-feedback" role="alert">{{ $message }}</span> @enderror
                             </div>

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -31,7 +32,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        $roles = Role::pluck('name', 'name')->all();
+        return view('users.create', compact('roles'));
     }
 
     /**
@@ -42,20 +44,28 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = $request->validate([
-            'nama'  => ['required', 'max:32', 'string'],
+        $request->validate([
+            'name'  => ['required', 'max:32', 'string'],
+            'email' => 'required|string|email|max:255|unique:users',
             'nrp'   => ['required', 'digits:9','unique:users'],
-            'foto'  => ['image', 'mimes:jpeg,png,gif', 'max:2048']
+            'foto'  => ['image', 'mimes:jpeg,png,gif', 'max:2048'],
+            'role' => 'required',
         ]);
+
+        $user = new User;
         $password = Str::random(10);
-        $user['password'] = Hash::make($password);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->nrp = $request->nrp;
+        $user->password = Hash::make($password);
         if ($request->file('foto')) {
-            $user['foto'] = $request->file('foto')->store('foto-profil');
+            $user->avatar = $request->file('foto')->store('foto-profil');
         } else {
-            $user['foto'] = 'default.jpg';
+            $user->avatar = 'default.jpg';
         }
 
-        User::create($user);
+        $user->assignRole($request->input('role'));
+        $user->save();
         return redirect('/users')->with('success', 'User berhasil ditambahkan, password = '.$password);
     }
 
@@ -104,7 +114,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('users.edit',compact('user'));
+        $roles = Role::pluck('name', 'name')->all();
+        return view('users.edit',compact('user', 'roles'));
     }
 
     /**
@@ -114,20 +125,30 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $user)
     {
-        $data = $request->validate([
-            'nama'  => ['required', 'max:32', 'string'],
-            'nrp'   => ['required', 'digits:9',Rule::unique('users','nrp')->ignore($user)],
-            'foto'  => ['image', 'mimes:jpeg,png,gif', 'max:2048']
+        $request->validate([
+            'name'  => ['required', 'max:32', 'string'],
+            'email' => 'required|string|email|max:255|unique:users,email,'.$user,
+            'nrp'   => 'required|digits:9|unique:users,nrp,'.$user,
+            'avatar'  => ['image', 'mimes:jpeg,png,gif', 'max:2048'],
+            'role' => 'required',
         ]);
+        
+        $data = User::findOrFail($user);
+        $data->name = $request->name;
+        $data->email = $request->email;
+        $data->nrp = $request->nrp;
+        
         if ($request->file('foto')) {
-            if ($user->foto != 'default.jpg') {
-                File::delete(public_path('storage'.'/'.$user->foto));
+            if ($data->avatar != 'default.jpg') {
+                File::delete(public_path('storage'.'/'.$data->avatar));
             }
-            $data['foto'] = $request->file('foto')->store('foto-profil');
+            $data->avatar = $request->file('foto')->store('foto-profil');
         }
-        $user->update($data);
+
+        $data->syncRoles($request->input('role'));
+        $data->save();
         return redirect()->back()->with('success', 'User berhasil diperbarui');
     }
 
@@ -139,11 +160,20 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $nama = $user->nama;
-        if ($user->foto != 'default.jpg') {
-            File::delete(public_path('storage'.'/'.$user->foto));
+        $nama = $user->name;
+        if ($user->avatar != 'default.jpg') {
+            File::delete(public_path('storage'.'/'.$user->avatar));
         }
         User::destroy($user->id);
-        return redirect('/users')->with('success','User "'.$user->nama.'" berhasil dihapus');
+        return redirect('/users')->with('success','User "'.$user->name.'" berhasil dihapus');
+    }
+
+    public function password(Request $request, User $user)
+    {
+        $password = Str::random(10);
+        $user->password = Hash::make($password);
+        $user->save();
+
+        return redirect()->back()->with('success','Password berhasil direset, Password = '.$password);
     }
 }
