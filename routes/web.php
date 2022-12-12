@@ -26,6 +26,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::group(['middleware' => ['web', 'auth']], function(){
     Route::group(['middleware' => ['role:admin']], function(){
         Route::resource('users', UserController::class);
+        Route::patch('/users/password/{user}', [UserController::class, 'password'])->name('users.password');
 
         Route::get('/kehadiran', [PresentController::class, 'index'])->name('kehadiran.index');
         Route::get('/kehadiran/cari', [PresentController::class, 'search'])->name('kehadiran.search');
