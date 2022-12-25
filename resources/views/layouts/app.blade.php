@@ -128,10 +128,10 @@
 
                     @if (Request::segment(1) == 'profil')
                         <li class="nav-item active">
-                        <a class="nav-link active" href="#">
+                        <a class="nav-link active" href="{{ route('profil') }}">
                     @else
                         <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="{{ route('profil') }}">
                     @endif
                             <i class="ni ni-single-02 text-yellow"></i> Profil
                         </a>
@@ -139,10 +139,10 @@
 
                     @if (Request::segment(1) == 'ganti-password')
                         <li class="nav-item active">
-                        <a class="nav-link active" href="#">
+                        <a class="nav-link active" href="{{ route('ganti-password') }}">
                     @else
                         <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="{{ route('ganti-password') }}">
                     @endif
                             <i class="ni ni-key-25 text-green"></i> Ganti Password
                         </a>

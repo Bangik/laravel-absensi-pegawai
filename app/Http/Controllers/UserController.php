@@ -176,4 +176,52 @@ class UserController extends Controller
 
         return redirect()->back()->with('success','Password berhasil direset, Password = '.$password);
     }
+    public function profil()
+    {
+        return view('users.profil');
+    }
+
+    public function updateProfil(Request $request, $user)
+    {
+        $user = User::findOrFail($user);
+        $request->validate([
+            'nama' => ['required', 'max:32'],
+            'foto' => ['image', 'mimes:jpeg,png,gif', 'max:2048']
+        ]);
+        $user->name = $request->nama;
+        if ($request->file('foto')) {
+            if ($user->avatar != 'default.jpg') {
+                File::delete(public_path('storage'.'/'.$user->avatar));
+            }
+            $user->avatar = $request->file('foto')->store('foto-profil');
+        }
+        $user->save();
+        return redirect()->back()->with('success','Profil berhasil di perbarui');
+    }
+
+    public function gantiPassword()
+    {
+        return view('users.ganti-password');
+    }
+    
+    public function updatePassword(Request $request, User $user)
+    {
+        $request->validate([
+            'password'                => 'required|min:6',
+            'password_baru'           => 'required|min:6|required_with:konfirmasi_password|same:konfirmasi_password',
+            'konfirmasi_password'     => 'required|min:6'
+        ]);
+
+        if (Hash::check($request->password, $user->password)) {
+            if ($request->password == $request->konfirmasi_password) {
+                return redirect()->back()->with('error','Password gagal diperbarui, tidak ada yang berubah pada kata sandi');
+            } else {
+                $user->password = Hash::make($request->konfirmasi_password);
+                $user->save();
+                return redirect()->back()->with('success','Password berhasil diperbarui');
+            }
+        } else {
+            return redirect()->back()->with('error','Password tidak cocok dengan kata sandi lama');
+        }
+    }
 }
