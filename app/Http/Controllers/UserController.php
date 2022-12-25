@@ -176,4 +176,27 @@ class UserController extends Controller
 
         return redirect()->back()->with('success','Password berhasil direset, Password = '.$password);
     }
+    public function profil()
+    {
+        return view('users.profil');
+    }
+
+    public function updateProfil(Request $request, $user)
+    {
+        $user = User::findOrFail($user);
+        $request->validate([
+            'nama' => ['required', 'max:32'],
+            'foto' => ['image', 'mimes:jpeg,png,gif', 'max:2048']
+        ]);
+        $user->name = $request->nama;
+        if ($request->file('foto')) {
+            if ($user->avatar != 'default.jpg') {
+                File::delete(public_path('storage'.'/'.$user->avatar));
+            }
+            $user->avatar = $request->file('foto')->store('foto-profil');
+        }
+        $user->save();
+        return redirect()->back()->with('success','Profil berhasil di perbarui');
+    }
+    
 }
