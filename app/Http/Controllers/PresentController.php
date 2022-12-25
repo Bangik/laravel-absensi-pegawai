@@ -130,4 +130,28 @@ class PresentController extends Controller
         $present = Present::findOrFail($request->id);
         echo json_encode($present);
     }
+
+    public function cariDaftarHadir(Request $request)
+    {
+        $request->validate([
+            'bulan' => ['required']
+        ]);
+        $data = explode('-',$request->bulan);
+        $presents = Present::whereUserId(auth()->user()->id)->whereMonth('dates',$data[1])->whereYear('dates',$data[0])->orderBy('dates','desc')->paginate(5);
+        $masuk = Present::whereUserId(auth()->user()->id)->whereMonth('dates',$data[1])->whereYear('dates',$data[0])->wherestatus('masuk')->count();
+        $telat = Present::whereUserId(auth()->user()->id)->whereMonth('dates',$data[1])->whereYear('dates',$data[0])->wherestatus('telat')->count();
+        $cuti = Present::whereUserId(auth()->user()->id)->whereMonth('dates',$data[1])->whereYear('dates',$data[0])->wherestatus('cuti')->count();
+        $alpha = Present::whereUserId(auth()->user()->id)->whereMonth('dates',$data[1])->whereYear('dates',$data[0])->wherestatus('alpha')->count();
+        return view('presents.show', compact('presents','masuk','telat','cuti','alpha'));
+    }
+    public function show()
+    {
+        $presents = Present::whereUserId(auth()->user()->id)->whereMonth('dates',date('m'))->whereYear('dates',date('Y'))->orderBy('dates','desc')->paginate(6);
+        $masuk = Present::whereUserId(auth()->user()->id)->whereMonth('dates',date('m'))->whereYear('dates',date('Y'))->wherestatus('masuk')->count();
+        $telat = Present::whereUserId(auth()->user()->id)->whereMonth('dates',date('m'))->whereYear('dates',date('Y'))->wherestatus('telat')->count();
+        $cuti = Present::whereUserId(auth()->user()->id)->whereMonth('dates',date('m'))->whereYear('dates',date('Y'))->wherestatus('cuti')->count();
+        $alpha = Present::whereUserId(auth()->user()->id)->whereMonth('dates',date('m'))->whereYear('dates',date('Y'))->wherestatus('alpha')->count();
+        return view('presents.show', compact('presents','masuk','telat','cuti','alpha'));
+    }
+
 }
