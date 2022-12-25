@@ -24,6 +24,12 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => ['web', 'auth']], function(){
+    
+    Route::get('/profil', [UserController::class, 'profil'])->name('profil');
+    Route::patch('/update-profil/{user}', [UserController::class, 'updateProfil'])->name('update-profil');
+
+    
+
     Route::group(['middleware' => ['role:admin']], function(){
         Route::resource('users', UserController::class);
         Route::patch('/users/password/{user}', [UserController::class, 'password'])->name('users.password');
@@ -31,5 +37,6 @@ Route::group(['middleware' => ['web', 'auth']], function(){
         Route::get('/kehadiran', [PresentController::class, 'index'])->name('kehadiran.index');
         Route::get('/kehadiran/cari', [PresentController::class, 'search'])->name('kehadiran.search');
         Route::post('kehadiran', [PresentController::class, 'store'])->name('kehadiran.store');
+
     });
 });
