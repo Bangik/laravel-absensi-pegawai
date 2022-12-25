@@ -145,7 +145,7 @@ Detail User - {{ config('app.name') }}
                         </form>
                     </div>
                     <div class="card-body">
-                        <form action="#" class="mb-3" method="get">
+                        <form action="{{ route('kehadiran.cari', ['user' => $user]) }}" class="mb-3" method="get">
                             <div class="form-group row mb-3 ">
                                 <label for="bulan" class="col-form-label col-sm-2">Bulan</label>
                                 <div class="input-group col-sm-10">

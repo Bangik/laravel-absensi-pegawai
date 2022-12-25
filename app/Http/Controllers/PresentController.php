@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Present;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PresentController extends Controller
@@ -30,6 +31,45 @@ class PresentController extends Controller
         $alpha = Present::whereDates($request->tanggal)->whereStatus('alpha')->count();
         $rank = $presents->firstItem();
         return view('presents.index', compact('presents','rank','masuk','telat','cuti','alpha'));
+    }
+
+    public function cari(Request $request, $user)
+    {
+
+        $user = User::findOrFail($user);
+
+        $request->validate([
+            'bulan' => ['required']
+        ]);
+
+        $data = explode('-',$request->bulan);
+        $presents = Present::whereUserId($user->id)->whereMonth('dates',$data[1])->whereYear('dates',$data[0])->orderBy('dates','desc')->paginate(5);
+        $masuk = Present::whereUserId($user->id)->whereMonth('dates',$data[1])->whereYear('dates',$data[0])->whereStatus('masuk')->count();
+        $telat = Present::whereUserId($user->id)->whereMonth('dates',$data[1])->whereYear('dates',$data[0])->whereStatus('telat')->count();
+        $cuti = Present::whereUserId($user->id)->whereMonth('dates',$data[1])->whereYear('dates',$data[0])->whereStatus('cuti')->count();
+        $alpha = Present::whereUserId($user->id)->whereMonth('dates',$data[1])->whereYear('dates',$data[0])->whereStatus('alpha')->count();
+        $kehadiran = Present::whereUserId($user->id)->whereMonth('dates',$data[1])->whereYear('dates',$data[0])->whereStatus('telat')->get();
+        $totalJamTelat = 0;
+        foreach ($kehadiran as $present) {
+            $totalJamTelat = $totalJamTelat + (\Carbon\Carbon::parse($present->jam_masuk)->diffInHours(\Carbon\Carbon::parse(config('absensi.jam_masuk') .' -1 hours')));
+        }
+        $url = 'https://kalenderindonesia.com/api/YZ35u6a7sFWN/libur/masehi/'.date('Y/m');
+        $kalender = file_get_contents($url);
+        $kalender = json_decode($kalender, true);
+        $libur = false;
+        $holiday = null;
+        if ($kalender['data'] != false) {
+            if ($kalender['data']['holiday']['data']) {
+                foreach ($kalender['data']['holiday']['data'] as $key => $value) {
+                    if ($value['date'] == date('Y-m-d')) {
+                        $holiday = $value['name'];
+                        $libur = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return view('users.show', compact('presents','user','masuk','telat','cuti','alpha','libur','totalJamTelat'));
     }
 
     public function store(Request $request)
