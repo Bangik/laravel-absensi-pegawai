@@ -96,4 +96,32 @@ class PresentController extends Controller
         Present::create($data);
         return redirect()->back()->with('success','Kehadiran berhasil ditambahkan');
     }
+
+    public function update(Request $request, $kehadiran)
+    {
+        $kehadiran = Present::findOrFail($kehadiran);
+        $data = $request->validate([
+            'status'    => ['required']
+        ]);
+
+        if ($request->jam_keluar) {
+            $data['time_out'] = $request->jam_keluar;
+        }
+
+        if ($request->status == 'Masuk' || $request->status == 'Telat') {
+            $data['time_in'] = $request->jam_masuk;
+            if (strtotime($data['time_in']) >= strtotime(config('absensi.jam_masuk') .' -1 hours') && strtotime($data['time_in']) <= strtotime(config('absensi.jam_masuk'))) {
+                $data['status'] = 'Masuk';
+            } else if (strtotime($data['time_in']) > strtotime(config('absensi.jam_masuk')) && strtotime($data['time_in']) <= strtotime(config('absensi.jam_pulang'))) {
+                $data['status'] = 'Telat';
+            } else {
+                $data['status'] = 'Alpha';
+            }
+        } else {
+            $data['time_in'] = null;
+            $data['time_out'] = null;
+        }
+        $kehadiran->update($data);
+        return redirect()->back()->with('success', 'Kehadiran tanggal "'.date('l, d F Y',strtotime($kehadiran->dates)).'" berhasil diubah');
+    }
 }
