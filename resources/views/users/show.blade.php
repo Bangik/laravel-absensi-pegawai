@@ -100,12 +100,13 @@ Detail User - {{ config('app.name') }}
                         <a href="{{ route('users.index') }}" class="btn btn-sm btn-secondary float-right">Kembali</a>
                     </div>
                     <div class="card-body">
-                        <img src="{{ asset(Storage::url($user->foto)) }}" class="card-img mb-3" alt="{{ $user->foto }}">
+                        <img src="{{ asset(Storage::url($user->avatar)) }}" class="card-img mb-3" alt="{{ $user->avatar }}">
                         <div class="table-responsive">
                             <table class="table table-sm">
                                 <tbody>
                                     <tr><td>NRP</td><td>: {{ $user->nrp }}</td></tr>
                                     <tr><td>Nama</td><td>: {{ $user->name }}</td></tr>
+                                    <tr><td>Email</td><td>: {{ $user->email }}</td></tr>
                                     <tr><td>Sebagai</td><td>: {{ $user->getRoleNames() }}</td></tr>
                                 </tbody>
                             </table>
