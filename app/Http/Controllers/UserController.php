@@ -85,7 +85,7 @@ class UserController extends Controller
         $kehadiran = Present::whereUserId($user->id)->whereMonth('dates',date('m'))->whereYear('dates',date('Y'))->whereStatus('telat')->get();
         $totalJamTelat = 0;
         foreach ($kehadiran as $present) {
-            $totalJamTelat = $totalJamTelat + (\Carbon\Carbon::parse($present->jam_masuk)->diffInHours(\Carbon\Carbon::parse(config('absensi.jam_masuk'))));
+            $totalJamTelat = $totalJamTelat + (\Carbon\Carbon::parse($present->time_in)->diffInHours(\Carbon\Carbon::parse(config('absensi.jam_masuk'))));
         }
         $url = 'https://kalenderindonesia.com/api/YZ35u6a7sFWN/libur/masehi/'.date('Y/m');
         $kalender = file_get_contents($url);
