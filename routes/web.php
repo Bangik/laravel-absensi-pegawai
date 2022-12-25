@@ -25,10 +25,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::group(['middleware' => ['web', 'auth']], function(){
     
+    Route::get('/ganti-password', [UserController::class,'gantiPassword'])->name('ganti-password');
     Route::get('/profil', [UserController::class, 'profil'])->name('profil');
     Route::patch('/update-profil/{user}', [UserController::class, 'updateProfil'])->name('update-profil');
-
-    
+    Route::patch('/update-password/{user}', [UserController::class, 'updatePassword'])->name('update-password');
+       
 
     Route::group(['middleware' => ['role:admin']], function(){
         Route::resource('users', UserController::class);
