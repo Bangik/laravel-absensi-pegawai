@@ -43,7 +43,5 @@ Route::group(['middleware' => ['web', 'auth']], function(){
         Route::post('/kehadiran/ubah', [PresentController::class, 'ubah'])->name('ajax.get.kehadiran');
     });
 
-    // Route::group(['middleware' => ['role:pegawai']], function(){
-
-    // });
+    Route::post('/absen', [PresentController::class, 'checkIn'])->name('kehadiran.check-in');
 });

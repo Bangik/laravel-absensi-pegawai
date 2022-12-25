@@ -34,10 +34,10 @@
                 @else
                     <div class="text-center">
                         <p>
-                            Absen Datang hari ini pukul : ({{ ($present->jam_masuk) }})
+                            Absen Datang hari ini pukul : ({{ ($present->time_in) }})
                         </p>
-                        @if ($present->jam_keluar)
-                            <p>Absen Pulang hari ini pukul : ({{ $present->jam_keluar }})</p>
+                        @if ($present->time_out)
+                            <p>Absen Pulang hari ini pukul : ({{ $present->time_out }})</p>
                         @else
                             @if (strtotime('now') >= strtotime(config('absensi.jam_pulang')))
                                 <p>Jika pekerjaan telah selesai silahkan Absen Pulang</p>
@@ -55,7 +55,7 @@
                 <div class="text-center">
                     @if (strtotime(date('H:i:s')) >= strtotime(config('absensi.jam_masuk') . ' -1 hours') && strtotime(date('H:i:s')) <= strtotime(config('absensi.jam_pulang')))
                         <p>Silahkan Absen Datang</p>
-                        <form action="#" method="post">
+                        <form action="{{ route('kehadiran.check-in') }}" method="post">
                             @csrf
                             <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                             <button class="btn btn-primary" type="submit">Absen Datang</button>
@@ -65,6 +65,6 @@
                     @endif
                 </div>
             @endif
-        @endif
+        {{-- @endif --}}
     @endif
 @endsection
