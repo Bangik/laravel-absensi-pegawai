@@ -78,7 +78,7 @@
                         @role('admin')
                             <a class="nav-link nav-link-icon" href="{{ route('kehadiran.index') }}">
                         @else
-                            <a class="nav-link nav-link-icon" href="#">
+                            <a class="nav-link nav-link-icon" href="{{ route('daftar-hadir') }}">
                         @endrole
                             <i class="ni ni-check-bold"></i>
                             <span class="nav-link-inner--text">Kehadiran</span>
