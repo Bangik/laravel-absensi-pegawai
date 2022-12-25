@@ -124,4 +124,10 @@ class PresentController extends Controller
         $kehadiran->update($data);
         return redirect()->back()->with('success', 'Kehadiran tanggal "'.date('l, d F Y',strtotime($kehadiran->dates)).'" berhasil diubah');
     }
+
+    public function ubah(Request $request)
+    {
+        $present = Present::findOrFail($request->id);
+        echo json_encode($present);
+    }
 }

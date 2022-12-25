@@ -33,5 +33,6 @@ Route::group(['middleware' => ['web', 'auth']], function(){
         Route::get('kehadiran/{user}/cari', [PresentController::class, 'cari'])->name('kehadiran.cari');
         Route::post('kehadiran', [PresentController::class, 'store'])->name('kehadiran.store');
         Route::patch('kehadiran/{kehadiran}', [PresentController::class, 'update'])->name('kehadiran.update');
+        Route::post('/kehadiran/ubah', [PresentController::class, 'ubah'])->name('ajax.get.kehadiran');
     });
 });
