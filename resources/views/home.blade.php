@@ -8,11 +8,11 @@
             <p>Absen Libur (Hari Libur Nasional {{ $holiday }})</p>
         </div>
     @else
-        @if (date('l') == "Saturday" || date('l') == "Sunday")
+        {{-- @if (date('l') == "Saturday" || date('l') == "Sunday")
             <div class="text-center">
                 <p>Absen Libur</p>
             </div>
-        @else
+        @else --}}
             @if ($present)
                 @if ($present->keterangan == 'Alpha')
                     <div class="text-center">
@@ -34,14 +34,14 @@
                 @else
                     <div class="text-center">
                         <p>
-                            Absen Datang hari ini pukul : ({{ ($present->jam_masuk) }})
+                            Absen Datang hari ini pukul : ({{ ($present->time_in) }})
                         </p>
-                        @if ($present->jam_keluar)
-                            <p>Absen Pulang hari ini pukul : ({{ $present->jam_keluar }})</p>
+                        @if ($present->time_out)
+                            <p>Absen Pulang hari ini pukul : ({{ $present->time_out }})</p>
                         @else
                             @if (strtotime('now') >= strtotime(config('absensi.jam_pulang')))
                                 <p>Jika pekerjaan telah selesai silahkan Absen Pulang</p>
-                                <form action="#" method="post">
+                                <form action="{{ route('kehadiran.check-out', ['kehadiran' => $present]) }}" method="post">
                                     @csrf @method('patch')
                                     <button class="btn btn-primary" type="submit">Absen Pulang</button>
                                 </form>
@@ -55,7 +55,7 @@
                 <div class="text-center">
                     @if (strtotime(date('H:i:s')) >= strtotime(config('absensi.jam_masuk') . ' -1 hours') && strtotime(date('H:i:s')) <= strtotime(config('absensi.jam_pulang')))
                         <p>Silahkan Absen Datang</p>
-                        <form action="#" method="post">
+                        <form action="{{ route('kehadiran.check-in') }}" method="post">
                             @csrf
                             <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                             <button class="btn btn-primary" type="submit">Absen Datang</button>
@@ -65,6 +65,6 @@
                     @endif
                 </div>
             @endif
-        @endif
+        {{-- @endif --}}
     @endif
 @endsection

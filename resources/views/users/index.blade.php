@@ -38,7 +38,7 @@ Users Management - {{ config('app.name') }}
             <div class="card-body">
                 <div class="row">
                     <div class="col-lg-6">
-                        <form action="#" method="get">
+                        <form action="{{ route('users.search') }}" method="get">
                             <input type="text" name="cari" id="cari" class="form-control mb-3" value="{{ request('cari') }}" placeholder="Cari . . ." autocomplete="off">
                         </form>
                     </div>

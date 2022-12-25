@@ -51,7 +51,7 @@ class PresentController extends Controller
         $kehadiran = Present::whereUserId($user->id)->whereMonth('dates',$data[1])->whereYear('dates',$data[0])->whereStatus('telat')->get();
         $totalJamTelat = 0;
         foreach ($kehadiran as $present) {
-            $totalJamTelat = $totalJamTelat + (\Carbon\Carbon::parse($present->jam_masuk)->diffInHours(\Carbon\Carbon::parse(config('absensi.jam_masuk') .' -1 hours')));
+            $totalJamTelat = $totalJamTelat + (\Carbon\Carbon::parse($present->time_in)->diffInHours(\Carbon\Carbon::parse(config('absensi.jam_masuk') .' -1 hours')));
         }
         $url = 'https://kalenderindonesia.com/api/YZ35u6a7sFWN/libur/masehi/'.date('Y/m');
         $kalender = file_get_contents($url);
@@ -131,6 +131,59 @@ class PresentController extends Controller
         echo json_encode($present);
     }
 
+    public function checkIn(Request $request)
+    {
+        $users = User::all();
+        $data['time_in']  = date('H:i:s');
+        $data['dates']    = date('Y-m-d');
+        $data['user_id']    = $request->user_id;
+
+        // if (date('l') == 'Saturday' || date('l') == 'Sunday') {
+        //     return redirect()->back()->with('error','Hari Libur Tidak bisa Check In');
+        // }
+
+        foreach ($users as $user) {
+            $absen = Present::whereUserId($user->id)->whereDates($data['dates'])->first();
+            if (!$absen) {
+                if ($user->id != $data['user_id']) {
+                    Present::create([
+                        'status'    => 'Alpha',
+                        'dates'       => date('Y-m-d'),
+                        'user_id'       => $user->id
+                    ]);
+                }
+            }
+        }
+
+        if (strtotime($data['time_in']) >= strtotime(config('absensi.jam_masuk') .' -1 hours') && strtotime($data['time_in']) <= strtotime(config('absensi.jam_masuk'))) {
+            $data['status'] = 'Masuk';
+        } else if (strtotime($data['time_in']) > strtotime(config('absensi.jam_masuk')) && strtotime($data['time_in']) <= strtotime(config('absensi.jam_pulang'))) {
+            $data['status'] = 'Telat';
+        } else {
+            $data['status'] = 'Alpha';
+        }
+
+        $present = Present::whereUserId($data['user_id'])->whereDates($data['dates'])->first();
+        if ($present) {
+            if ($present->status == 'Alpha') {
+                $present->update($data);
+                return redirect()->back()->with('success','Check-in berhasil');
+            } else {
+                return redirect()->back()->with('error','Check-in gagal');
+            }
+        }
+
+        Present::create($data);
+        return redirect()->back()->with('success','Check-in berhasil');
+    }
+
+    public function checkOut(Request $request, Present $kehadiran)
+    {
+        $data['time_out'] = date('H:i:s');
+        $kehadiran->update($data);
+        return redirect()->back()->with('success', 'Check-out berhasil');
+    }
+
     public function cariDaftarHadir(Request $request)
     {
         $request->validate([
@@ -144,6 +197,7 @@ class PresentController extends Controller
         $alpha = Present::whereUserId(auth()->user()->id)->whereMonth('dates',$data[1])->whereYear('dates',$data[0])->wherestatus('alpha')->count();
         return view('presents.show', compact('presents','masuk','telat','cuti','alpha'));
     }
+    
     public function show()
     {
         $presents = Present::whereUserId(auth()->user()->id)->whereMonth('dates',date('m'))->whereYear('dates',date('Y'))->orderBy('dates','desc')->paginate(6);
@@ -153,5 +207,4 @@ class PresentController extends Controller
         $alpha = Present::whereUserId(auth()->user()->id)->whereMonth('dates',date('m'))->whereYear('dates',date('Y'))->wherestatus('alpha')->count();
         return view('presents.show', compact('presents','masuk','telat','cuti','alpha'));
     }
-
 }
