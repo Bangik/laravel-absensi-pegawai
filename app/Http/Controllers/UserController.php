@@ -224,4 +224,16 @@ class UserController extends Controller
             return redirect()->back()->with('error','Password tidak cocok dengan kata sandi lama');
         }
     }
+
+    public function search(Request $request)
+    {
+        $request->validate([
+            'cari' => ['required']
+        ]);
+        $users = User::where('name','like','%'.$request->cari.'%')
+                    ->orWhere('nrp','like','%'.$request->cari.'%')
+                    ->paginate(6);
+        $rank = $users->firstItem();
+        return view('users.index', compact('users','rank'));
+    }
 }

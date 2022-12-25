@@ -29,11 +29,11 @@ Route::group(['middleware' => ['web', 'auth']], function(){
     Route::get('/profil', [UserController::class, 'profil'])->name('profil');
     Route::patch('/update-profil/{user}', [UserController::class, 'updateProfil'])->name('update-profil');
     Route::patch('/update-password/{user}', [UserController::class, 'updatePassword'])->name('update-password');
-       
-
+    
     Route::group(['middleware' => ['role:admin']], function(){
-        Route::resource('users', UserController::class);
+        Route::get('/users/cari', [UserController::class, 'search'])->name('users.search');
         Route::patch('/users/password/{user}', [UserController::class, 'password'])->name('users.password');
+        Route::resource('users', UserController::class);
 
         Route::get('/kehadiran', [PresentController::class, 'index'])->name('kehadiran.index');
         Route::get('/kehadiran/cari', [PresentController::class, 'search'])->name('kehadiran.search');
@@ -42,4 +42,8 @@ Route::group(['middleware' => ['web', 'auth']], function(){
         Route::patch('/kehadiran/{kehadiran}', [PresentController::class, 'update'])->name('kehadiran.update');
         Route::post('/kehadiran/ubah', [PresentController::class, 'ubah'])->name('ajax.get.kehadiran');
     });
+
+    // Route::group(['middleware' => ['role:pegawai']], function(){
+
+    // });
 });
