@@ -43,6 +43,11 @@ Route::group(['middleware' => ['web', 'auth']], function(){
         Route::post('/kehadiran/ubah', [PresentController::class, 'ubah'])->name('ajax.get.kehadiran');
     });
 
+    Route::group(['roles' => 'Pegawai'], function(){
+        Route::get('/daftar-hadir', [PresentController::class, 'show'])->name('daftar-hadir');
+        Route::get('/daftar-hadir/cari', [PresentController::class,'cariDaftarHadir'])->name('daftar-hadir.cari');
+    });
+    
     Route::post('/absen', [PresentController::class, 'checkIn'])->name('kehadiran.check-in');
     Route::patch('/absen/{kehadiran}', [PresentController::class, 'checkOut'])->name('kehadiran.check-out');
 });
