@@ -8,11 +8,11 @@
             <p>Absen Libur (Hari Libur Nasional {{ $holiday }})</p>
         </div>
     @else
-        @if (date('l') == "Saturday" || date('l') == "Sunday")
+        {{-- @if (date('l') == "Saturday" || date('l') == "Sunday")
             <div class="text-center">
                 <p>Absen Libur</p>
             </div>
-        @else
+        @else --}}
             @if ($present)
                 @if ($present->keterangan == 'Alpha')
                     <div class="text-center">
@@ -41,7 +41,7 @@
                         @else
                             @if (strtotime('now') >= strtotime(config('absensi.jam_pulang')))
                                 <p>Jika pekerjaan telah selesai silahkan Absen Pulang</p>
-                                <form action="#" method="post">
+                                <form action="{{ route('kehadiran.check-out', ['kehadiran' => $present]) }}" method="post">
                                     @csrf @method('patch')
                                     <button class="btn btn-primary" type="submit">Absen Pulang</button>
                                 </form>

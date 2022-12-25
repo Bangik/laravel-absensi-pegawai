@@ -138,9 +138,9 @@ class PresentController extends Controller
         $data['dates']    = date('Y-m-d');
         $data['user_id']    = $request->user_id;
 
-        if (date('l') == 'Saturday' || date('l') == 'Sunday') {
-            return redirect()->back()->with('error','Hari Libur Tidak bisa Check In');
-        }
+        // if (date('l') == 'Saturday' || date('l') == 'Sunday') {
+        //     return redirect()->back()->with('error','Hari Libur Tidak bisa Check In');
+        // }
 
         foreach ($users as $user) {
             $absen = Present::whereUserId($user->id)->whereDates($data['dates'])->first();
@@ -175,5 +175,12 @@ class PresentController extends Controller
 
         Present::create($data);
         return redirect()->back()->with('success','Check-in berhasil');
+    }
+
+    public function checkOut(Request $request, Present $kehadiran)
+    {
+        $data['time_out'] = date('H:i:s');
+        $kehadiran->update($data);
+        return redirect()->back()->with('success', 'Check-out berhasil');
     }
 }
