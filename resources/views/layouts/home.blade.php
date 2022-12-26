@@ -43,7 +43,7 @@
     <nav class="navbar navbar-top navbar-horizontal navbar-expand-md navbar-dark">
         <div class="container px-4">
             <a class="navbar-brand" href="{{ route('home') }}">
-                <h1 class="text-white">{{ config('app.name') }}</h1>
+                <h1 class="text-white">{{ $site_name }}</h1>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-main"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,7 +55,7 @@
                     <div class="row">
                         <div class="col-6 collapse-brand">
                             <a href="{{ route('home') }}">
-                                <h1>{{ config('app.name') }}</h1>
+                                <h1>{{ $site_name }}</h1>
                             </a>
                         </div>
                         <div class="col-6 collapse-close">

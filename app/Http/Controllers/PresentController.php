@@ -38,6 +38,7 @@ class PresentController extends Controller
     {
 
         $user = User::findOrFail($user);
+        $time_in = Setting::where('name', 'time_in')->first()->value;
 
         $request->validate([
             'bulan' => ['required']
@@ -52,7 +53,7 @@ class PresentController extends Controller
         $kehadiran = Present::whereUserId($user->id)->whereMonth('dates',$data[1])->whereYear('dates',$data[0])->whereStatus('telat')->get();
         $totalJamTelat = 0;
         foreach ($kehadiran as $present) {
-            $totalJamTelat = $totalJamTelat + (\Carbon\Carbon::parse($present->time_in)->diffInHours(\Carbon\Carbon::parse(config('absensi.jam_masuk') .' -1 hours')));
+            $totalJamTelat = $totalJamTelat + (\Carbon\Carbon::parse($present->time_in)->diffInHours(\Carbon\Carbon::parse($time_in .' -1 hours')));
         }
         $url = 'https://kalenderindonesia.com/api/YZ35u6a7sFWN/libur/masehi/'.date('Y/m');
         $kalender = file_get_contents($url);
@@ -75,6 +76,8 @@ class PresentController extends Controller
 
     public function store(Request $request)
     {
+        $time_in = Setting::where('name', 'time_in')->first()->value;
+        $time_out = Setting::where('name', 'time_out')->first()->value;
         $present = Present::whereUserId($request->user_id)->whereDates(date('Y-m-d'))->first();
         if ($present) {
             return redirect()->back()->with('error','Absensi hari ini telah terisi');
@@ -86,9 +89,9 @@ class PresentController extends Controller
         $data['dates'] = date('Y-m-d');
         if ($request->status == 'Masuk' || $request->status == 'Telat') {
             $data['time_in'] = $request->jam_masuk;
-            if (strtotime($data['time_in']) >= strtotime(config('absensi.jam_masuk') .' -1 hours') && strtotime($data['time_in']) <= strtotime(config('absensi.jam_masuk'))) {
+            if (strtotime($data['time_in']) >= strtotime($time_in .' -1 hours') && strtotime($data['time_in']) <= strtotime($time_in)) {
                 $data['status'] = 'Masuk';
-            } else if (strtotime($data['time_in']) > strtotime(config('absensi.jam_masuk')) && strtotime($data['time_in']) <= strtotime(config('absensi.jam_pulang'))) {
+            } else if (strtotime($data['time_in']) > strtotime($time_in) && strtotime($data['time_in']) <= strtotime($time_out)) {
                 $data['status'] = 'Telat';
             } else {
                 $data['status'] = 'Alpha';
@@ -100,6 +103,8 @@ class PresentController extends Controller
 
     public function update(Request $request, $kehadiran)
     {
+        $time_in = Setting::where('name', 'time_in')->first()->value;
+        $time_out = Setting::where('name', 'time_out')->first()->value;
         $kehadiran = Present::findOrFail($kehadiran);
         $data = $request->validate([
             'status'    => ['required']
@@ -111,9 +116,9 @@ class PresentController extends Controller
 
         if ($request->status == 'Masuk' || $request->status == 'Telat') {
             $data['time_in'] = $request->jam_masuk;
-            if (strtotime($data['time_in']) >= strtotime(config('absensi.jam_masuk') .' -1 hours') && strtotime($data['time_in']) <= strtotime(config('absensi.jam_masuk'))) {
+            if (strtotime($data['time_in']) >= strtotime($time_in .' -1 hours') && strtotime($data['time_in']) <= strtotime($time_in)) {
                 $data['status'] = 'Masuk';
-            } else if (strtotime($data['time_in']) > strtotime(config('absensi.jam_masuk')) && strtotime($data['time_in']) <= strtotime(config('absensi.jam_pulang'))) {
+            } else if (strtotime($data['time_in']) > strtotime($time_in) && strtotime($data['time_in']) <= strtotime($time_out)) {
                 $data['status'] = 'Telat';
             } else {
                 $data['status'] = 'Alpha';
@@ -134,6 +139,8 @@ class PresentController extends Controller
 
     public function checkIn(Request $request)
     {
+        $time_in = Setting::where('name', 'time_in')->first()->value;
+        $time_out = Setting::where('name', 'time_out')->first()->value;
         $users = User::all();
         $radius = Setting::where('name', 'radius')->first()->value;
         $data['time_in']  = date('H:i:s');
@@ -161,9 +168,9 @@ class PresentController extends Controller
             }
         }
 
-        if (strtotime($data['time_in']) >= strtotime(config('absensi.jam_masuk') .' -1 hours') && strtotime($data['time_in']) <= strtotime(config('absensi.jam_masuk'))) {
+        if (strtotime($data['time_in']) >= strtotime($time_in .' -1 hours') && strtotime($data['time_in']) <= strtotime($time_in)) {
             $data['status'] = 'Masuk';
-        } else if (strtotime($data['time_in']) > strtotime(config('absensi.jam_masuk')) && strtotime($data['time_in']) <= strtotime(config('absensi.jam_pulang'))) {
+        } else if (strtotime($data['time_in']) > strtotime($time_in) && strtotime($data['time_in']) <= strtotime($time_out)) {
             $data['status'] = 'Telat';
         } else {
             $data['status'] = 'Alpha';

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Present;
+use App\Models\Setting;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -77,6 +78,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        $time_in = Setting::where('name','time_in')->first()->value;
         $presents = Present::whereUserId($user->id)->whereMonth('dates',date('m'))->whereYear('dates',date('Y'))->orderBy('dates','desc')->paginate(5);
         $masuk = Present::whereUserId($user->id)->whereMonth('dates',date('m'))->whereYear('dates',date('Y'))->whereStatus('masuk')->count();
         $telat = Present::whereUserId($user->id)->whereMonth('dates',date('m'))->whereYear('dates',date('Y'))->whereStatus('telat')->count();
@@ -85,7 +87,7 @@ class UserController extends Controller
         $kehadiran = Present::whereUserId($user->id)->whereMonth('dates',date('m'))->whereYear('dates',date('Y'))->whereStatus('telat')->get();
         $totalJamTelat = 0;
         foreach ($kehadiran as $present) {
-            $totalJamTelat = $totalJamTelat + (\Carbon\Carbon::parse($present->time_in)->diffInHours(\Carbon\Carbon::parse(config('absensi.jam_masuk'))));
+            $totalJamTelat = $totalJamTelat + (\Carbon\Carbon::parse($present->time_in)->diffInHours(\Carbon\Carbon::parse($time_in)));
         }
         $url = 'https://kalenderindonesia.com/api/YZ35u6a7sFWN/libur/masehi/'.date('Y/m');
         $kalender = file_get_contents($url);

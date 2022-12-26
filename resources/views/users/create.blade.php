@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-Tambah User - {{ config('app.name') }}
+Tambah User - {{ $site_name }}
 @endsection
 @section('content')
 

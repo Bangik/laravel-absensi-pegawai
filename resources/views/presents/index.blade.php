@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-Kehadiran - {{ config('app.name') }}
+Kehadiran - {{ $site_name }}
 @endsection
 
 @section('header')
@@ -146,7 +146,7 @@ Kehadiran - {{ config('app.name') }}
                                                 @if (strtotime($present->time_out) <= strtotime($present->time_in))
                                                     {{ 21 - (\Carbon\Carbon::parse($present->time_in)->diffInHours(\Carbon\Carbon::parse($present->time_out))) }}
                                                 @else
-                                                    @if (strtotime($present->time_out) >= strtotime(config('absensi.jam_pulang') . ' +2 hours'))
+                                                    @if (strtotime($present->time_out) >= strtotime($time_out . ' +2 hours'))
                                                         {{ (\Carbon\Carbon::parse($present->time_in)->diffInHours(\Carbon\Carbon::parse($present->time_out))) - 3 }}
                                                     @else
                                                         {{ (\Carbon\Carbon::parse($present->time_in)->diffInHours(\Carbon\Carbon::parse($present->time_out))) - 1 }}

@@ -1,7 +1,7 @@
 @extends('layouts.home')
 
 @section('title')
-    Welcome - {{ config('app.name') }}
+    Welcome - {{ $site_name }}
 @endsection
 
 @section('content')
