@@ -120,7 +120,7 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-5 col-md-6">
                             <h1 class="text-white">Selamat Datang!</h1>
-                            <p class="text-lead text-light">Sistem Absensi Terpadu</p>
+                            <p class="text-lead text-light">Sistem Informasi Prista Jaya</p>
                         </div>
                     </div>
                 </div>
