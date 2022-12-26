@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-Ubah User - {{ config('app.name') }}
+Ubah User - {{ $site_name }}
 @endsection
 @section('content')
 

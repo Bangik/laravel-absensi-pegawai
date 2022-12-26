@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-Users Management - {{ config('app.name') }}
+Users Management - {{ $site_name }}
 @endsection
 
 @section('header')

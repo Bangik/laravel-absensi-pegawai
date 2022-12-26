@@ -1,7 +1,7 @@
 @extends('layouts.home')
 
 @section('title')
-    Login - {{ config('app.name') }}
+    Login - {{ $site_name }}
 @endsection
 
 @section('content')

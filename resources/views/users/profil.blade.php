@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-Profil - {{ config('app.name') }}
+Profil - {{ $site_name }}
 @endsection
 @section('content')
 

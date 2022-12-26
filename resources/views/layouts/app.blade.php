@@ -76,7 +76,7 @@
                     <div class="row">
                         <div class="col-6 collapse-brand">
                             <a href="{{ route('home') }}">
-                                <h1>{{ config('app.name') }}</h1>
+                                <h1>{{ $site_name }}</h1>
                             </a>
                         </div>
                         <div class="col-6 collapse-close">
@@ -111,6 +111,17 @@
                             <a class="nav-link" href="{{ route('users.index') }}">
                         @endif
                                 <i class="ni ni-circle-08 text-primary"></i> Users
+                            </a>
+                        </li>
+
+                        @if (Request::segment(1) == 'setting')
+                            <li class="nav-item active">
+                            <a class="nav-link active" href="{{ route('setting.index') }}">
+                        @else
+                            <li class="nav-item">
+                            <a class="nav-link" href="{{ route('setting.index') }}">
+                        @endif
+                                <i class="ni ni-settings text-primary"></i> Setting
                             </a>
                         </li>
                     @else

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-Ganti Password - {{ config('app.name') }}
+Ganti Password - {{ $site_name }}
 @endsection
 @section('content')
 
