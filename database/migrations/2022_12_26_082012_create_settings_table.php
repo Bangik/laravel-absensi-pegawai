@@ -24,8 +24,8 @@ class CreateSettingsTable extends Migration
             $table->timestamps();
         });
 
-        $seed = SettingSeeder::class;
-        $seed::run();
+        $seed = new SettingSeeder();
+        $seed->run();
     }
 
     /**

@@ -54,7 +54,7 @@
                         aria-expanded="false">
                         <div class="media align-items-center">
                             <span class="avatar avatar-sm rounded-circle">
-                                <img alt="Image placeholder" src="{{ asset(Storage::url(Auth::user()->foto)) }}"
+                                <img alt="Image placeholder" src="{{ asset(Storage::url(Auth::user()->avatar)) }}"
                                     alt="{{ Auth::user()->foto }}">
                             </span>
                         </div>
@@ -185,7 +185,7 @@
                             aria-expanded="false">
                             <div class="media align-items-center">
                                 <span class="avatar avatar-sm rounded-circle">
-                                    <img alt="Image placeholder" src="{{ Storage::url(Auth::user()->foto ) }}"
+                                    <img alt="Image placeholder" src="{{ Storage::url(Auth::user()->avatar ) }}"
                                         alt="{{ Auth::user()->foto }}">
                                 </span>
                                 <div class="media-body ml-2 d-none d-lg-block">
