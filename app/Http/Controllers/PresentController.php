@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Present;
+use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -134,13 +135,18 @@ class PresentController extends Controller
     public function checkIn(Request $request)
     {
         $users = User::all();
+        $radius = Setting::where('name', 'radius')->first()->value;
         $data['time_in']  = date('H:i:s');
         $data['dates']    = date('Y-m-d');
         $data['user_id']    = $request->user_id;
 
-        // if (date('l') == 'Saturday' || date('l') == 'Sunday') {
-        //     return redirect()->back()->with('error','Hari Libur Tidak bisa Check In');
-        // }
+        if (date('l') == 'Saturday' || date('l') == 'Sunday') {
+            return redirect()->back()->with('error','Hari Libur Tidak bisa Check In');
+        }
+
+        if($request->distance > $radius) {
+            return redirect()->back()->with('error','Anda berada diluar radius kantor');
+        }
 
         foreach ($users as $user) {
             $absen = Present::whereUserId($user->id)->whereDates($data['dates'])->first();
@@ -179,6 +185,11 @@ class PresentController extends Controller
 
     public function checkOut(Request $request, Present $kehadiran)
     {
+        $radius = Setting::where('name', 'radius')->first()->value;
+        if($request->distance > $radius) {
+            return redirect()->back()->with('error','Anda berada diluar radius kantor');
+        }
+
         $data['time_out'] = date('H:i:s');
         $kehadiran->update($data);
         return redirect()->back()->with('success', 'Check-out berhasil');

@@ -41,7 +41,6 @@ class HomeController extends Controller
                 }
             }
         }
-        $libur = false;
         return view('home', compact('present','libur','holiday'));
     }
 }

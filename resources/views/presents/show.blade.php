@@ -116,23 +116,23 @@ Detail User - {{ config('app.name') }}
                             @else
                                 @foreach ($presents as $present)
                                     <tr>
-                                        <td>{{ date('d/m/Y', strtotime($present->tanggal)) }}</td>
-                                        <td>{{ $present->keterangan }}</td>
-                                        @if ($present->jam_masuk)
-                                            <td>{{ date('H:i:s', strtotime($present->jam_masuk)) }}</td>
+                                        <td>{{ date('d/m/Y', strtotime($present->dates)) }}</td>
+                                        <td>{{ $present->status }}</td>
+                                        @if ($present->time_in)
+                                            <td>{{ date('H:i:s', strtotime($present->time_in)) }}</td>
                                         @else
                                             <td>-</td>
                                         @endif
-                                        @if($present->jam_keluar)
-                                            <td>{{ date('H:i:s', strtotime($present->jam_keluar)) }}</td>
+                                        @if($present->time_out)
+                                            <td>{{ date('H:i:s', strtotime($present->time_out)) }}</td>
                                             <td>
-                                                @if (strtotime($present->jam_keluar) <= strtotime($present->jam_masuk))
-                                                    {{ 21 - (\Carbon\Carbon::parse($present->jam_masuk)->diffInHours(\Carbon\Carbon::parse($present->jam_keluar))) }}
+                                                @if (strtotime($present->time_out) <= strtotime($present->time_in))
+                                                    {{ 21 - (\Carbon\Carbon::parse($present->time_in)->diffInHours(\Carbon\Carbon::parse($present->time_out))) }}
                                                 @else
-                                                    @if (strtotime($present->jam_keluar) >= strtotime(config('absensi.jam_pulang') . ' +2 hours'))
-                                                        {{ (\Carbon\Carbon::parse($present->jam_masuk)->diffInHours(\Carbon\Carbon::parse($present->jam_keluar))) - 3 }}
+                                                    @if (strtotime($present->time_out) >= strtotime(config('absensi.jam_pulang') . ' +2 hours'))
+                                                        {{ (\Carbon\Carbon::parse($present->time_in)->diffInHours(\Carbon\Carbon::parse($present->time_out))) - 3 }}
                                                     @else
-                                                        {{ (\Carbon\Carbon::parse($present->jam_masuk)->diffInHours(\Carbon\Carbon::parse($present->jam_keluar))) - 1 }}
+                                                        {{ (\Carbon\Carbon::parse($present->time_in)->diffInHours(\Carbon\Carbon::parse($present->time_out))) - 1 }}
                                                     @endif
                                                 @endif
                                             </td>

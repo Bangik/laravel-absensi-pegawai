@@ -100,12 +100,13 @@ Detail User - {{ config('app.name') }}
                         <a href="{{ route('users.index') }}" class="btn btn-sm btn-secondary float-right">Kembali</a>
                     </div>
                     <div class="card-body">
-                        <img src="{{ asset(Storage::url($user->foto)) }}" class="card-img mb-3" alt="{{ $user->foto }}">
+                        <img src="{{ asset(Storage::url($user->avatar)) }}" class="card-img mb-3" alt="{{ $user->avatar }}">
                         <div class="table-responsive">
                             <table class="table table-sm">
                                 <tbody>
                                     <tr><td>NRP</td><td>: {{ $user->nrp }}</td></tr>
                                     <tr><td>Nama</td><td>: {{ $user->name }}</td></tr>
+                                    <tr><td>Email</td><td>: {{ $user->email }}</td></tr>
                                     <tr><td>Sebagai</td><td>: {{ $user->getRoleNames() }}</td></tr>
                                 </tbody>
                             </table>
@@ -201,7 +202,7 @@ Detail User - {{ config('app.name') }}
                                                     <td>-</td>
                                                 @endif
                                                 <td>
-                                                    <button id="btnUbahKehadiran" data-id="{{ $present->id }}" type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#ubahKehadiran">
+                                                    <button data-id="{{ $present->id }}" type="button" class="btn btn-sm btn-success btnUbahKehadiran" data-toggle="modal" data-target="#ubahKehadiran">
                                                         <i class="far fa-edit"></i>
                                                     </button>
                                                 </td>
@@ -275,7 +276,7 @@ Detail User - {{ config('app.name') }}
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="formUbahKehadiran" action="" method="post">
+                <form class="formUbahKehadiran" action="" method="post">
                     @csrf @method('patch')
                     <div class="modal-body">
                         <h5 class="mb-3" id="tanggal"></h5>
@@ -329,10 +330,10 @@ Detail User - {{ config('app.name') }}
                     $('#jamMasuk').hide();
                 }
             });
-            $('#btnUbahKehadiran').on('click',function(){
+            $('.btnUbahKehadiran').on('click',function(){
                 const CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
                 const id = $(this).data('id');
-                $('#formUbahKehadiran').attr('action', "{{ url('kehadiran') }}/" + id);
+                $('.formUbahKehadiran').attr('action', "{{ url('kehadiran') }}/" + id);
                 $.ajax({
                     url: "{{ route('ajax.get.kehadiran') }}",
                     method: 'post',
