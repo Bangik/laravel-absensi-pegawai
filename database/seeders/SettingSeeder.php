@@ -16,7 +16,7 @@ class SettingSeeder extends Seeder
     {
         Setting::create([
             'name' => 'site_name',
-            'value' => 'Laravel 8',
+            'value' => 'Sistem Informasi Prista Jaya',
             'type' => 'text',
             'description' => 'Site Name',
             'status' => 'active',
