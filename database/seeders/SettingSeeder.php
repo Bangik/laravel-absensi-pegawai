@@ -24,7 +24,7 @@ class SettingSeeder extends Seeder
 
         Setting::create([
             'name' => 'latitude',
-            'value' => '3.075037',
+            'value' => '-8.190001',
             'type' => 'text',
             'description' => 'Latitude of the location',
             'status' => 'active',
@@ -32,7 +32,7 @@ class SettingSeeder extends Seeder
 
         Setting::create([
             'name' => 'longitude',
-            'value' => '101.551629',
+            'value' => '113.7068009',
             'type' => 'text',
             'description' => 'Longitude of the location',
             'status' => 'active',
