@@ -31,5 +31,13 @@ class AppServiceProvider extends ServiceProvider
                 'radius' => Setting::where('name', 'radius')->first()->value,
             ]);
         });
+
+        view()->composer('*', function($view){
+            $view->with([
+                'site_name' => Setting::where('name', 'site_name')->first()->value,
+                'time_in' => Setting::where('name', 'time_in')->first()->value,
+                'time_out' => Setting::where('name', 'time_out')->first()->value,
+            ]);
+        });
     }
 }

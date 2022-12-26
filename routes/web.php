@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PresentController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +42,9 @@ Route::group(['middleware' => ['web', 'auth']], function(){
         Route::post('/kehadiran', [PresentController::class, 'store'])->name('kehadiran.store');
         Route::patch('/kehadiran/{kehadiran}', [PresentController::class, 'update'])->name('kehadiran.update');
         Route::post('/kehadiran/ubah', [PresentController::class, 'ubah'])->name('ajax.get.kehadiran');
+
+        Route::get('/setting', [SettingController::class, 'index'])->name('setting.index');
+        Route::patch('/setting', [SettingController::class, 'update'])->name('setting.update');
     });
 
     Route::group(['roles' => 'Pegawai'], function(){
