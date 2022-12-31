@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Present;
 use App\Models\Setting;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
@@ -67,6 +67,12 @@ class UserController extends Controller
 
         $user->assignRole($request->input('role'));
         $user->save();
+        if(!$user){
+            return redirect('/users')->with('error', 'User gagal ditambahkan');
+        }
+        
+        // $user->notify(new \App\Notifications\NewUser($password));
+        event(new Registered($user));
         return redirect('/users')->with('success', 'User berhasil ditambahkan, password = '.$password);
     }
 
