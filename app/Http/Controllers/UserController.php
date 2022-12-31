@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Present;
 use App\Models\Setting;
+use App\Notifications\UserPassword;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
@@ -71,7 +72,7 @@ class UserController extends Controller
             return redirect('/users')->with('error', 'User gagal ditambahkan');
         }
         
-        // $user->notify(new \App\Notifications\NewUser($password));
+        $user->notify(new UserPassword($password));
         event(new Registered($user));
         return redirect('/users')->with('success', 'User berhasil ditambahkan, password = '.$password);
     }
