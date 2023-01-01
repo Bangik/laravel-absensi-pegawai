@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\GetHoliday;
 use App\Models\Present;
 use App\Models\Setting;
 use App\Models\User;
@@ -55,22 +56,8 @@ class PresentController extends Controller
         foreach ($kehadiran as $present) {
             $totalJamTelat = $totalJamTelat + (\Carbon\Carbon::parse($present->time_in)->diffInHours(\Carbon\Carbon::parse($time_in .' -1 hours')));
         }
-        $url = 'https://kalenderindonesia.com/api/YZ35u6a7sFWN/libur/masehi/'.date('Y/m');
-        $kalender = file_get_contents($url);
-        $kalender = json_decode($kalender, true);
-        $libur = false;
-        $holiday = null;
-        if ($kalender['data'] != false) {
-            if ($kalender['data']['holiday']['data']) {
-                foreach ($kalender['data']['holiday']['data'] as $key => $value) {
-                    if ($value['date'] == date('Y-m-d')) {
-                        $holiday = $value['name'];
-                        $libur = true;
-                        break;
-                    }
-                }
-            }
-        }
+        $dataHoliday = GetHoliday::getHoliday(date('Y/m'));
+        $libur = $dataHoliday['libur'];
         return view('users.show', compact('presents','user','masuk','telat','cuti','alpha','libur','totalJamTelat'));
     }
 
