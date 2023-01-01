@@ -13,9 +13,10 @@ class SettingController extends Controller
         $long = Setting::where('name', 'longitude')->first()->value;
         $time_in = Setting::where('name', 'time_in')->first()->value;
         $time_out = Setting::where('name', 'time_out')->first()->value;
+        $time_in_reminder = Setting::where('name', 'time_in_reminder')->first()->value;
         $radius = Setting::where('name', 'radius')->first()->value;
 
-        return view('setting.index', compact('name', 'lat', 'long', 'time_in', 'time_out', 'radius'));
+        return view('setting.index', compact('name', 'lat', 'long', 'time_in', 'time_out', 'radius', 'time_in_reminder'));
     }
 
     public function update(Request $request){
@@ -25,6 +26,7 @@ class SettingController extends Controller
             'long' => 'required',
             'time_in' => 'required',
             'time_out' => 'required',
+            'time_in_reminder' => 'required',
             'radius' => 'required',
         ]);
 
@@ -47,6 +49,10 @@ class SettingController extends Controller
         $time_out = Setting::where('name', 'time_out')->first();
         $time_out->value = $request->time_out;
         $time_out->save();
+
+        $time_in_reminder = Setting::where('name', 'time_in_reminder')->first();
+        $time_in_reminder->value = $request->time_in_reminder;
+        $time_in_reminder->save();
 
         $radius = Setting::where('name', 'radius')->first();
         $radius->value = $request->radius;

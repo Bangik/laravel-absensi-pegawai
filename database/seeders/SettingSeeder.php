@@ -55,6 +55,14 @@ class SettingSeeder extends Seeder
         ]);
 
         Setting::create([
+            'name' => 'time_in_reminder',
+            'value' => '08:50',
+            'type' => 'time',
+            'description' => 'Jam Masuk Reminder',
+            'status' => 'active',
+        ]);
+
+        Setting::create([
             'name' => 'radius',
             'value' => '500',
             'type' => 'number',

@@ -26,10 +26,15 @@ Setting - {{ $site_name }}
                           @error('time_in')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="form-group">
-                          <label for="time_out">Jam Keluar</label>
+                          <label for="time_out">Jam Pulang</label>
                           <input type="time" class="form-control  @error('time_out') is-invalid @enderror" id="time_out" name="time_out" value="{{$time_out}}">
                           @error('time_out')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
+                        <div class="form-group">
+                            <label for="time_in_reminder">Jam Pengingat Masuk</label>
+                            <input type="time" class="form-control  @error('time_in_reminder') is-invalid @enderror" id="time_in_reminder" name="time_in_reminder" value="{{$time_in_reminder}}">
+                            @error('time_in_reminder')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                          </div>
                         <div class="form-group">
                             <label for="lat">Koordinat Latitude</label>
                             <input type="text" class="form-control  @error('lat') is-invalid @enderror" id="lat" name="lat" value="{{$lat}}">
