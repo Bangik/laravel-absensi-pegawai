@@ -17,7 +17,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('inspire')->hourly();
         if (date('l') == 'Saturday' || date('l') == 'Sunday') {
             return;
         }
