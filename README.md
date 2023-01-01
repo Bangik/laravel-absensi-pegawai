@@ -27,12 +27,19 @@ Dikembangkan dengan Laravel v8 dan PHP 7.4
 -   Setting mailtrap pada file .env dan sesuaikan dengan kredensial mailtrap masing-masing untuk testing email verifikasi dan email notifikasi
 
     `MAIL_MAILER=smtp`
+
     `MAIL_HOST=smtp.mailtrap.io`
+
     `MAIL_PORT=`
+
     `MAIL_USERNAME=`
+
     `MAIL_PASSWORD=`
+
     `MAIL_ENCRYPTION=tls`
+
     `MAIL_FROM_ADDRESS=notif@example.com`
+    
     `MAIL_FROM_NAME="${APP_NAME}"`
 
 -   Generate Key
