@@ -18,11 +18,11 @@ Dikembangkan dengan Laravel v8 dan PHP 7.4
 
 -   Setting database pada file .env dan sesuaikan dengan database di local
 
-    `DB_DATABASE:`
+    `DB_DATABASE=`
 
-    `DB_USERNAME:`
+    `DB_USERNAME=`
 
-    `DB_PASSWORD:`
+    `DB_PASSWORD=`
 
 -   Setting mailtrap pada file .env dan sesuaikan dengan kredensial mailtrap masing-masing untuk testing email verifikasi dan email notifikasi
 
@@ -44,7 +44,7 @@ Dikembangkan dengan Laravel v8 dan PHP 7.4
 
 -   Setting QUEUE_CONNECTION pada file .env menjadi database
 
-    `QUEUE_CONNECTION:database`
+    `QUEUE_CONNECTION=database`
 
 -   Generate Key
 
