@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\GetHoliday;
 use App\Models\User;
 use App\Models\Present;
 use App\Models\Setting;
+use App\Notifications\UserPassword;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
@@ -67,6 +69,12 @@ class UserController extends Controller
 
         $user->assignRole($request->input('role'));
         $user->save();
+        if(!$user){
+            return redirect('/users')->with('error', 'User gagal ditambahkan');
+        }
+        
+        $user->notify(new UserPassword($password));
+        event(new Registered($user));
         return redirect('/users')->with('success', 'User berhasil ditambahkan, password = '.$password);
     }
 
@@ -89,22 +97,8 @@ class UserController extends Controller
         foreach ($kehadiran as $present) {
             $totalJamTelat = $totalJamTelat + (\Carbon\Carbon::parse($present->time_in)->diffInHours(\Carbon\Carbon::parse($time_in)));
         }
-        $url = 'https://kalenderindonesia.com/api/YZ35u6a7sFWN/libur/masehi/'.date('Y/m');
-        $kalender = file_get_contents($url);
-        $kalender = json_decode($kalender, true);
-        $libur = false;
-        $holiday = null;
-        if ($kalender['data'] != false) {
-            if ($kalender['data']['holiday']['data']) {
-                foreach ($kalender['data']['holiday']['data'] as $key => $value) {
-                    if ($value['date'] == date('Y-m-d')) {
-                        $holiday = $value['name'];
-                        $libur = true;
-                        break;
-                    }
-                }
-            }
-        }
+        $dataHoliday = GetHoliday::getHoliday(date('Y/m'));
+        $libur = $dataHoliday['libur'];
         return view('users.show',compact('user','presents','libur','masuk','telat','cuti','alpha','totalJamTelat'));
     }
 
