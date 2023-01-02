@@ -15,7 +15,7 @@ Profil - {{ $site_name }}
                         @method('patch')
                         @csrf
                         <div class="text-center mb-3">
-                            <img id="image" src="{{ asset(Storage::url(Auth::user()->foto)) }}" alt="{{ Auth::user()->foto }}" class="img-thumbnail mb-1">
+                            <img id="image" src="{{ asset(Storage::url(Auth::user()->avatar)) }}" alt="{{ Auth::user()->avatar }}" class="img-thumbnail mb-1">
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-2"><label for="foto" class="col-form-label">Foto</label></div>
@@ -35,7 +35,7 @@ Profil - {{ $site_name }}
                         <div class="form-group row">
                             <div class="col-sm-2"><label for="nama" class="col-form-label">Nama</label></div>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" value="{{ Auth::user()->nama }}">
+                                <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" value="{{ Auth::user()->name }}">
                                 @error('nama') <span class="invalid-feedback" role="alert">{{ $message }}</span> @enderror
                             </div>
                         </div>
