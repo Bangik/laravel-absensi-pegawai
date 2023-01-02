@@ -114,6 +114,17 @@
                             </a>
                         </li>
 
+                        @if (Request::segment(1) == 'pengajuan')
+                            <li class="nav-item active">
+                            <a class="nav-link active" href="{{ route('submission.index') }}">
+                        @else
+                            <li class="nav-item">
+                            <a class="nav-link" href="{{ route('submission.index') }}">
+                        @endif
+                                <i class="ni ni-calendar-grid-58 text-primary"></i> Pengajuan
+                            </a>
+                        </li>
+
                         @if (Request::segment(1) == 'setting')
                             <li class="nav-item active">
                             <a class="nav-link active" href="{{ route('setting.index') }}">
@@ -133,6 +144,17 @@
                             <a class="nav-link" href="{{ route('daftar-hadir') }}">
                         @endif
                                 <i class="ni ni-check-bold text-primary"></i> Kehadiran
+                            </a>
+                        </li>
+
+                        @if (Request::segment(1) == 'pengajuan')
+                            <li class="nav-item active">
+                            <a class="nav-link active" href="{{ route('submission.create') }}">
+                        @else
+                            <li class="nav-item">
+                            <a class="nav-link" href="{{ route('submission.create') }}">
+                        @endif
+                                <i class="ni ni-calendar-grid-58 text-primary"></i> Pengajuan
                             </a>
                         </li>
                     @endrole
