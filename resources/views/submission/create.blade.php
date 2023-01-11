@@ -9,21 +9,22 @@ Pengajuan Cuti - {{ $site_name }}
         <div class="col-md-6">
             <div class="card shadow h-100">
                 <div class="card-header">
-                    <h5 class="m-0 pt-1 font-weight-bold">Pengajuan Cuti</h5>
+                  <h5 class="m-0 pt-1 font-weight-bold float-left">Pengajuan Cuti</h5>
+                  <a href="{{ route('submission.list') }}" class="btn btn-primary btn-sm float-right" title="Histori Pengajuan"><i class="fas fa-history"></i></a>
                 </div>
                 <div class="card-body">
                     @if ($submission != null)
                       @if ($submission->status == 'Tertunda')
                         <div class="alert alert-warning show" role="alert">
-                          Status Pengajuan Cuti Tanggal {{ date('d M Y', strtotime($submission->dates)) }} Anda : <strong>{{ $submission->status }}</strong> Silakan Hubungi Admin!
+                          Status Pengajuan Cuti Tanggal {{ date('d M Y', strtotime($submission->dates_start)) }} Anda : <strong>{{ $submission->status }}</strong> Silakan Hubungi Admin!
                         </div>
                         @elseif($submission->status == 'Ditolak')
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                          Status Pengajuan Cuti Tanggal {{ date('d M Y', strtotime($submission->dates)) }} Anda : <strong>{{ $submission->status }}</strong> dengan catatan : <strong>{{ $submission->note }}</strong>
+                          Status Pengajuan Cuti Tanggal {{ date('d M Y', strtotime($submission->dates_start)) }} Anda : <strong>{{ $submission->status }}</strong> dengan catatan : <strong>{{ $submission->note }}</strong>
                         </div>
                         @else
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
-                          Status Pengajuan Cuti Tanggal {{ date('d M Y', strtotime($submission->dates)) }} Anda : <strong>{{ $submission->status }}</strong>
+                          Status Pengajuan Cuti Tanggal {{ date('d M Y', strtotime($submission->dates_start)) }} Anda : <strong>{{ $submission->status }}</strong>
                         </div>
                       @endif
                     @endif

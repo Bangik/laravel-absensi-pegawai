@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\PresentController;
 use App\Http\Controllers\SettingController;
-use App\Http\Controllers\SubmissionController;
+use App\Http\Controllers\LeaveApplicationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,8 +36,11 @@ Route::group(['middleware' => ['web', 'auth', 'verified']], function(){
     Route::patch('/update-profil/{user}', [UserController::class, 'updateProfil'])->name('update-profil');
     Route::patch('/update-password/{user}', [UserController::class, 'updatePassword'])->name('update-password');
 
-    Route::get('/pengajuan/create', [SubmissionController::class, 'create'])->name('submission.create');
-    Route::post('/pengajuan/store', [SubmissionController::class, 'store'])->name('submission.store');
+    Route::get('/pengajuan/create', [LeaveApplicationController::class, 'create'])->name('submission.create');
+    Route::get('/pengajuan/histori', [LeaveApplicationController::class, 'list'])->name('submission.list');
+    Route::get('/pengajuan/histori/detail/{id}', [LeaveApplicationController::class, 'detail'])->name('submission.detail');
+    Route::post('/pengajuan/store', [LeaveApplicationController::class, 'store'])->name('submission.store');
+    Route::get('/pengajuan/cari-histori', [LeaveApplicationController::class, 'searchHistory'])->name('submission.searchHistory');
     
     Route::group(['middleware' => ['role:admin']], function(){
         Route::get('/users/cari', [UserController::class, 'search'])->name('users.search');
@@ -51,15 +54,15 @@ Route::group(['middleware' => ['web', 'auth', 'verified']], function(){
         Route::patch('/kehadiran/{kehadiran}', [PresentController::class, 'update'])->name('kehadiran.update');
         Route::post('/kehadiran/ubah', [PresentController::class, 'ubah'])->name('ajax.get.kehadiran');
         
-        Route::get('/pengajuan', [SubmissionController::class, 'index'])->name('submission.index');
+        Route::get('/pengajuan', [LeaveApplicationController::class, 'index'])->name('submission.index');
         Route::get('/setting', [SettingController::class, 'index'])->name('setting.index');
         Route::patch('/setting', [SettingController::class, 'update'])->name('setting.update');
         
-        Route::get('/pengajuan/show/{submission}', [SubmissionController::class, 'show'])->name('submission.show');
-        Route::post('/pengajuan/edit', [SubmissionController::class, 'edit'])->name('submission.edit');
-        Route::patch('/pengajuan/update/{submission}', [SubmissionController::class, 'update'])->name('submission.update');
-        Route::delete('/pengajuan/destroy/{submission}', [SubmissionController::class, 'destroy'])->name('submission.destroy');
-        Route::get('/pengajuan/cari', [SubmissionController::class, 'search'])->name('submission.search');
+        Route::get('/pengajuan/show/{submission}', [LeaveApplicationController::class, 'show'])->name('submission.show');
+        Route::post('/pengajuan/edit', [LeaveApplicationController::class, 'edit'])->name('submission.edit');
+        Route::patch('/pengajuan/update/{submission}', [LeaveApplicationController::class, 'update'])->name('submission.update');
+        Route::delete('/pengajuan/destroy/{submission}', [LeaveApplicationController::class, 'destroy'])->name('submission.destroy');
+        Route::get('/pengajuan/cari', [LeaveApplicationController::class, 'search'])->name('submission.search');
     });
 
     Route::group(['roles' => 'Pegawai'], function(){
