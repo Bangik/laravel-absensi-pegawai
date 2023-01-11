@@ -121,7 +121,7 @@
                             <li class="nav-item">
                             <a class="nav-link" href="{{ route('submission.index') }}">
                         @endif
-                                <i class="ni ni-calendar-grid-58 text-primary"></i> Pengajuan
+                                <i class="ni ni-calendar-grid-58 text-primary"></i> Pengajuan Cuti
                             </a>
                         </li>
 
@@ -154,7 +154,7 @@
                             <li class="nav-item">
                             <a class="nav-link" href="{{ route('submission.create') }}">
                         @endif
-                                <i class="ni ni-calendar-grid-58 text-primary"></i> Pengajuan
+                                <i class="ni ni-calendar-grid-58 text-primary"></i> Pengajuan Cuti
                             </a>
                         </li>
                     @endrole
