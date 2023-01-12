@@ -40,7 +40,7 @@ Histori Pengajuan Lembur - {{ $site_name }}
                         <tbody>
                             @if (!$overtimes->count())
                                 <tr>
-                                    <td colspan="5" class="text-center">Tidak ada data yang tersedia</td>
+                                    <td colspan="6" class="text-center">Tidak ada data yang tersedia</td>
                                 </tr>
                             @else
                                 @foreach ($overtimes as $overtime)
