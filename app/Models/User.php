@@ -55,4 +55,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(leaveApplication::class);
     }
+
+    public function overtimeApplications()
+    {
+        return $this->hasMany(OvertimeApplication::class);
+    }
 }

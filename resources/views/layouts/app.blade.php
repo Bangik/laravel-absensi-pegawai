@@ -125,6 +125,17 @@
                             </a>
                         </li>
 
+                        @if (Request::segment(1) == 'lembur')
+                            <li class="nav-item active">
+                            <a class="nav-link active" href="{{ route('overtime.index') }}">
+                        @else
+                            <li class="nav-item">
+                            <a class="nav-link" href="{{ route('overtime.index') }}">
+                        @endif
+                                <i class="ni ni-calendar-grid-58 text-primary"></i> Pengajuan Lembur
+                            </a>
+                        </li>
+
                         @if (Request::segment(1) == 'setting')
                             <li class="nav-item active">
                             <a class="nav-link active" href="{{ route('setting.index') }}">
@@ -155,6 +166,17 @@
                             <a class="nav-link" href="{{ route('submission.create') }}">
                         @endif
                                 <i class="ni ni-calendar-grid-58 text-primary"></i> Pengajuan Cuti
+                            </a>
+                        </li>
+
+                        @if (Request::segment(1) == 'lembur')
+                            <li class="nav-item active">
+                            <a class="nav-link active" href="{{ route('overtime.create') }}">
+                        @else
+                            <li class="nav-item">
+                            <a class="nav-link" href="{{ route('overtime.create') }}">
+                        @endif
+                                <i class="ni ni-calendar-grid-58 text-primary"></i> Pengajuan Lembur
                             </a>
                         </li>
                     @endrole

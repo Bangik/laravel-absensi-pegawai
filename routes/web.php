@@ -3,6 +3,7 @@
 use App\Http\Controllers\PresentController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\LeaveApplicationController;
+use App\Http\Controllers\OvertimeApplicationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,6 +43,12 @@ Route::group(['middleware' => ['web', 'auth', 'verified']], function(){
     Route::post('/pengajuan/store', [LeaveApplicationController::class, 'store'])->name('submission.store');
     Route::get('/pengajuan/cari-histori', [LeaveApplicationController::class, 'searchHistory'])->name('submission.searchHistory');
     
+    Route::get('/lembur/create', [OvertimeApplicationController::class, 'create'])->name('overtime.create');
+    Route::post('/lembur/store', [OvertimeApplicationController::class, 'store'])->name('overtime.store');
+    Route::get('/lembur/histori', [OvertimeApplicationController::class, 'list'])->name('overtime.list');
+    Route::get('/lembur/histori/detail/{id}', [OvertimeApplicationController::class, 'detail'])->name('overtime.detail');
+    Route::get('/lembur/cari-histori', [OvertimeApplicationController::class, 'searchHistory'])->name('overtime.searchHistory');
+
     Route::group(['middleware' => ['role:admin']], function(){
         Route::get('/users/cari', [UserController::class, 'search'])->name('users.search');
         Route::patch('/users/password/{user}', [UserController::class, 'password'])->name('users.password');
@@ -63,6 +70,13 @@ Route::group(['middleware' => ['web', 'auth', 'verified']], function(){
         Route::patch('/pengajuan/update/{submission}', [LeaveApplicationController::class, 'update'])->name('submission.update');
         Route::delete('/pengajuan/destroy/{submission}', [LeaveApplicationController::class, 'destroy'])->name('submission.destroy');
         Route::get('/pengajuan/cari', [LeaveApplicationController::class, 'search'])->name('submission.search');
+
+        Route::get('/lembur', [OvertimeApplicationController::class, 'index'])->name('overtime.index');
+        Route::get('/lembur/show/{overtime}', [OvertimeApplicationController::class, 'show'])->name('overtime.show');
+        Route::get('/lembur/edit/{overtime}', [OvertimeApplicationController::class, 'edit'])->name('overtime.edit');
+        Route::patch('/lembur/update/{overtime}', [OvertimeApplicationController::class, 'update'])->name('overtime.update');
+        Route::delete('/lembur/destroy/{overtime}', [OvertimeApplicationController::class, 'destroy'])->name('overtime.destroy');
+        Route::get('/lembur/cari', [OvertimeApplicationController::class, 'search'])->name('overtime.search');
     });
 
     Route::group(['roles' => 'Pegawai'], function(){
