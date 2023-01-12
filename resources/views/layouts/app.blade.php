@@ -114,6 +114,17 @@
                             </a>
                         </li>
 
+                        @if (Request::segment(1) == 'aktivitas-kerja-pegawai')
+                            <li class="nav-item active">
+                            <a class="nav-link active" href="{{ route('aktivitas-kerja.list') }}">
+                        @else
+                            <li class="nav-item">
+                            <a class="nav-link" href="{{ route('aktivitas-kerja.list') }}">
+                        @endif
+                                <i class="ni ni-calendar-grid-58 text-primary"></i> Aktivitas Kerja Pegawai
+                            </a>
+                        </li>
+
                         @if (Request::segment(1) == 'pengajuan')
                             <li class="nav-item active">
                             <a class="nav-link active" href="{{ route('submission.index') }}">
@@ -122,6 +133,17 @@
                             <a class="nav-link" href="{{ route('submission.index') }}">
                         @endif
                                 <i class="ni ni-calendar-grid-58 text-primary"></i> Pengajuan Cuti
+                            </a>
+                        </li>
+
+                        @if (Request::segment(1) == 'lembur')
+                            <li class="nav-item active">
+                            <a class="nav-link active" href="{{ route('overtime.index') }}">
+                        @else
+                            <li class="nav-item">
+                            <a class="nav-link" href="{{ route('overtime.index') }}">
+                        @endif
+                                <i class="ni ni-calendar-grid-58 text-primary"></i> Pengajuan Lembur
                             </a>
                         </li>
 
@@ -147,6 +169,17 @@
                             </a>
                         </li>
 
+                        @if (Request::segment(1) == 'aktivitas-kerja')
+                            <li class="nav-item active">
+                            <a class="nav-link active" href="{{ route('aktivitas-kerja.index') }}">
+                        @else
+                            <li class="nav-item">
+                            <a class="nav-link" href="{{ route('aktivitas-kerja.index') }}">
+                        @endif
+                                <i class="ni ni-calendar-grid-58 text-primary"></i> Aktivitas Kerja
+                            </a>
+                        </li>
+
                         @if (Request::segment(1) == 'pengajuan')
                             <li class="nav-item active">
                             <a class="nav-link active" href="{{ route('submission.create') }}">
@@ -155,6 +188,17 @@
                             <a class="nav-link" href="{{ route('submission.create') }}">
                         @endif
                                 <i class="ni ni-calendar-grid-58 text-primary"></i> Pengajuan Cuti
+                            </a>
+                        </li>
+
+                        @if (Request::segment(1) == 'lembur')
+                            <li class="nav-item active">
+                            <a class="nav-link active" href="{{ route('overtime.create') }}">
+                        @else
+                            <li class="nav-item">
+                            <a class="nav-link" href="{{ route('overtime.create') }}">
+                        @endif
+                                <i class="ni ni-calendar-grid-58 text-primary"></i> Pengajuan Lembur
                             </a>
                         </li>
                     @endrole

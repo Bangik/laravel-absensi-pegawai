@@ -3,7 +3,9 @@
 use App\Http\Controllers\PresentController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\LeaveApplicationController;
+use App\Http\Controllers\OvertimeApplicationController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WorkScheduleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,6 +44,18 @@ Route::group(['middleware' => ['web', 'auth', 'verified']], function(){
     Route::post('/pengajuan/store', [LeaveApplicationController::class, 'store'])->name('submission.store');
     Route::get('/pengajuan/cari-histori', [LeaveApplicationController::class, 'searchHistory'])->name('submission.searchHistory');
     
+    Route::get('/lembur/create', [OvertimeApplicationController::class, 'create'])->name('overtime.create');
+    Route::post('/lembur/store', [OvertimeApplicationController::class, 'store'])->name('overtime.store');
+    Route::get('/lembur/histori', [OvertimeApplicationController::class, 'list'])->name('overtime.list');
+    Route::get('/lembur/histori/detail/{id}', [OvertimeApplicationController::class, 'detail'])->name('overtime.detail');
+    Route::get('/lembur/cari-histori', [OvertimeApplicationController::class, 'searchHistory'])->name('overtime.searchHistory');
+
+    Route::get('/aktivitas-kerja', [WorkScheduleController::class, 'index'])->name('aktivitas-kerja.index');
+    Route::get('/aktivitas-kerja/create', [WorkScheduleController::class, 'create'])->name('aktivitas-kerja.create');
+    Route::post('/aktivitas-kerja/store', [WorkScheduleController::class, 'store'])->name('aktivitas-kerja.store');
+    Route::get('/aktivitas-kerja/detail/{id}', [WorkScheduleController::class, 'detail'])->name('aktivitas-kerja.detail');
+    Route::get('/aktivitas-kerja/cari', [WorkScheduleController::class, 'search'])->name('aktivitas-kerja.search');
+
     Route::group(['middleware' => ['role:admin']], function(){
         Route::get('/users/cari', [UserController::class, 'search'])->name('users.search');
         Route::patch('/users/password/{user}', [UserController::class, 'password'])->name('users.password');
@@ -63,6 +77,20 @@ Route::group(['middleware' => ['web', 'auth', 'verified']], function(){
         Route::patch('/pengajuan/update/{submission}', [LeaveApplicationController::class, 'update'])->name('submission.update');
         Route::delete('/pengajuan/destroy/{submission}', [LeaveApplicationController::class, 'destroy'])->name('submission.destroy');
         Route::get('/pengajuan/cari', [LeaveApplicationController::class, 'search'])->name('submission.search');
+
+        Route::get('/lembur', [OvertimeApplicationController::class, 'index'])->name('overtime.index');
+        Route::get('/lembur/show/{overtime}', [OvertimeApplicationController::class, 'show'])->name('overtime.show');
+        Route::get('/lembur/edit/{overtime}', [OvertimeApplicationController::class, 'edit'])->name('overtime.edit');
+        Route::patch('/lembur/update/{overtime}', [OvertimeApplicationController::class, 'update'])->name('overtime.update');
+        Route::delete('/lembur/destroy/{overtime}', [OvertimeApplicationController::class, 'destroy'])->name('overtime.destroy');
+        Route::get('/lembur/cari', [OvertimeApplicationController::class, 'search'])->name('overtime.search');
+
+        Route::get('/aktivitas-kerja-pegawai', [WorkScheduleController::class, 'list'])->name('aktivitas-kerja.list');
+        Route::get('/aktivitas-kerja-pegawai/cari', [WorkScheduleController::class, 'searchActivity'])->name('aktivitas-kerja.searchActivity');
+        Route::get('/aktivitas-kerja-pegawai/show/{id}', [WorkScheduleController::class, 'show'])->name('aktivitas-kerja.show');
+        Route::patch('/aktivitas-kerja-pegawai/approval/{id}', [WorkScheduleController::class, 'approval'])->name('aktivitas-kerja.approval');
+        Route::delete('/aktivitas-kerja-pegawai/destroy/{id}', [WorkScheduleController::class, 'destroy'])->name('aktivitas-kerja.destroy');
+
     });
 
     Route::group(['roles' => 'Pegawai'], function(){

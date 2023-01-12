@@ -6,6 +6,7 @@ use App\Helpers\GetHoliday;
 use App\Models\User;
 use App\Models\Present;
 use App\Models\Setting;
+use App\Models\WorkSchedule;
 use App\Notifications\UserPassword;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\File;
@@ -99,7 +100,10 @@ class UserController extends Controller
         }
         $dataHoliday = GetHoliday::getHoliday(date('Y/m'));
         $libur = $dataHoliday['libur'];
-        return view('users.show',compact('user','presents','libur','masuk','telat','cuti','alpha','totalJamTelat'));
+        $schedules = WorkSchedule::where('user_id', $user->id)->orderBy('id', 'DESC')->paginate(5);
+        $rank = $schedules->firstItem();
+
+        return view('users.show',compact('user','presents','libur','masuk','telat','cuti','alpha','totalJamTelat','schedules','rank'));
     }
 
     /**

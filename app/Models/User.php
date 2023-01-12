@@ -55,4 +55,14 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(leaveApplication::class);
     }
+
+    public function overtimeApplications()
+    {
+        return $this->hasMany(OvertimeApplication::class);
+    }
+
+    public function workSchedules()
+    {
+        return $this->hasMany(WorkSchedule::class);
+    }
 }
