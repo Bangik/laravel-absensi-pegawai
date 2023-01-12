@@ -102,7 +102,11 @@ class LeaveApplicationController extends Controller
         ]);
         
         $search = $request->cari;
-        $submissions = LeaveApplication::where('reason', 'like', '%' . $search . '%')->paginate(5);
+        $submissions = LeaveApplication::
+        whereHas('user', function($query) use($search){
+            $query->where('users.name', 'like', '%'.$search.'%');
+        })
+        ->orWhere('reason', 'like', '%' . $search . '%')->paginate(5);
         $rank = $submissions->firstItem();
         $submissionToday = LeaveApplication::where('created_at', '>=', date('Y-m-d 00:00:00'))->count();
         return view('submission.index', compact('submissions', 'rank', 'submissionToday'));
