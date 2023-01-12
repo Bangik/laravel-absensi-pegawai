@@ -114,6 +114,17 @@
                             </a>
                         </li>
 
+                        @if (Request::segment(1) == 'aktivitas-kerja-pegawai')
+                            <li class="nav-item active">
+                            <a class="nav-link active" href="{{ route('aktivitas-kerja.list') }}">
+                        @else
+                            <li class="nav-item">
+                            <a class="nav-link" href="{{ route('aktivitas-kerja.list') }}">
+                        @endif
+                                <i class="ni ni-calendar-grid-58 text-primary"></i> Aktivitas Kerja Pegawai
+                            </a>
+                        </li>
+
                         @if (Request::segment(1) == 'pengajuan')
                             <li class="nav-item active">
                             <a class="nav-link active" href="{{ route('submission.index') }}">
@@ -155,6 +166,17 @@
                             <a class="nav-link" href="{{ route('daftar-hadir') }}">
                         @endif
                                 <i class="ni ni-check-bold text-primary"></i> Kehadiran
+                            </a>
+                        </li>
+
+                        @if (Request::segment(1) == 'aktivitas-kerja')
+                            <li class="nav-item active">
+                            <a class="nav-link active" href="{{ route('aktivitas-kerja.index') }}">
+                        @else
+                            <li class="nav-item">
+                            <a class="nav-link" href="{{ route('aktivitas-kerja.index') }}">
+                        @endif
+                                <i class="ni ni-calendar-grid-58 text-primary"></i> Aktivitas Kerja
                             </a>
                         </li>
 
