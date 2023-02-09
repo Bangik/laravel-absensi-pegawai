@@ -84,7 +84,7 @@ Aktivitas Kerja - {{ $site_name }}
         <div class="card shadow h-100">
             <div class="card-header">
                 <h5 class="m-0 pt-1 font-weight-bold float-left">Aktivitas Kerja</h5>
-                <a href="{{ route('aktivitas-kerja.create') }}" class="btn btn-primary btn-sm float-right" title="Histori Pengajuan"><i class="fas fa-plus"></i></a>
+                <a href="{{ route('aktivitas-kerja.create') }}" class="btn btn-primary btn-sm float-right" title="Tambah Aktivitas Kerja"><i class="fas fa-plus"></i></a>
             </div>
             <div class="card-body">
                 <div class="row">
