@@ -166,6 +166,9 @@
                 </div>
             </div>
         </div>
+        <div style="text-align: center;">
+            <p style="font-size: 26px; font-weight: bold;" class="motivation ">"Believe you can and you're halfway there." -Theodore Roosevelt</p>
+            </div>
         <footer class="py-5">
             <div class="container">
                 <div class="copyright text-center">
