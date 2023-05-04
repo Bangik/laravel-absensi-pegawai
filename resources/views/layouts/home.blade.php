@@ -185,7 +185,7 @@
     <!--   Optional JS   -->
     @stack('scripts')
 
-    <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+    {{-- <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script> --}}
     <script>
         $(document).ready(function(){
                 window.TrackJS && TrackJS.install({
@@ -198,11 +198,8 @@
             const lng = {{ $long }};
             let distance = 0;
 
-            const peta1 = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-                    '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-                    'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                id: 'mapbox/streets-v11'
+            const peta1 = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, '
             });
 
             let map = L.map('map', {
