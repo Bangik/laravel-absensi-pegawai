@@ -13468,12 +13468,16 @@ button.bg-lighter:focus {
   background-color: #cbd3da !important;
 }
 
-.bg-gradient-primary {
-  background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%) !important;
+..bg-gradient-primary {
+  background: linear-gradient(135deg, #ff0000, #ffffff);
+  background-size: 200% 200%;
+  animation: wave 2s linear infinite !important;
 }
 
 .bg-gradient-secondary {
-  background: linear-gradient(87deg, #f7fafc 0, #f7f8fc 100%) !important;
+  background: linear-gradient(135deg, #ff0000, #ffffff);
+  background-size: 200% 200%;
+  animation: wave 2s linear infinite !important;
 }
 
 .bg-gradient-success {
@@ -13764,11 +13768,15 @@ button.section-darker:focus {
 }
 
 .bg-gradient-primary {
-  background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%) !important;
+  background: linear-gradient(135deg, #ff0000, #ffffff);
+  background-size: 200% 200%;
+  animation: wave 2s linear infinite !important;
 }
 
 .bg-gradient-secondary {
-  background: linear-gradient(87deg, #f7fafc 0, #f7f8fc 100%) !important;
+  background: linear-gradient(135deg, #ff0000, #ffffff);
+  background-size: 200% 200%;
+  animation: wave 2s linear infinite !important;
 }
 
 .bg-gradient-success {
