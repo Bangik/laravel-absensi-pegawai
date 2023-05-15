@@ -20,6 +20,7 @@ Detail Aktivitas Kerja - {{ $site_name }}
                         <tr><td>Batas Waktu</td><td>: {{ date('d M Y', strtotime($schedule->due_date)) }}</td></tr>
                         <tr><td>Waktu Mulai</td><td>: {{ date('H:i', strtotime($schedule->start)) }}</td></tr>
                         <tr><td>Waktu Selesai</td><td>: {{ date('H:i', strtotime($schedule->end)) }}</td></tr>
+                        <tr><td>Lokasi Kerja</td><td>: {{ $schedule->work_location }}</td></tr>
                         <tr><td>Aktivitas</td><td>: {{ $schedule->activity }}</td></tr>
                         <tr><td>Target</td><td>: {{ $schedule->target }}</td></tr>
                         <tr><td>Laporan</td><td>: {{ $schedule->report }}</td></tr>
