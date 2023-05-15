@@ -106,6 +106,7 @@ Aktivitas Kerja - {{ $site_name }}
                                 <th>#</th>
                                 <th>Tanggal</th>
                                 <th>Batas Waktu</th>
+                                <th>Lokasi Kerja</th>
                                 <th>Aktivitas</th>
                                 <th>Target</th>
                                 <th>Status</th>
@@ -124,6 +125,7 @@ Aktivitas Kerja - {{ $site_name }}
                                         <th>{{ $rank++ }}</th>
                                         <td>{{ date('d M Y', strtotime($schedule->dates)) }}</td>
                                         <td>{{ date('d M Y', strtotime($schedule->due_date)) }}</td>
+                                        <td>{{ $schedule->work_location }}</td>
                                         <td>{{ $schedule->activity }}</td>
                                         <td>{{ $schedule->target }}</td>
                                         <td>{{ $schedule->status }}</td>
