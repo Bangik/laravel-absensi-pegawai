@@ -26,6 +26,7 @@ class WorkScheduleController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'work_location' => 'required',
             'activity' => 'required',
             'target' => 'required',
             'report' => 'required',
@@ -37,6 +38,7 @@ class WorkScheduleController extends Controller
 
         $schedule = new WorkSchedule;
         $schedule->user_id = auth()->user()->id;
+        $schedule->work_location = $request->work_location;
         $schedule->activity = $request->activity;
         $schedule->target = $request->target;
         $schedule->report = $request->report;
