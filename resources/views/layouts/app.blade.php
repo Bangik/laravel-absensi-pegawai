@@ -309,11 +309,13 @@
             <footer class="footer">
                 <div class="row align-items-center justify-content-xl-between">
                     <div class="col-xl-6">
+                    <marquee behavior="scroll" direction="left">
                         <div class="copyright text-center text-xl-left text-muted">
                             © {{ date('Y')}} Developed By <a href="#" class="font-weight-bold ml-1"
                                 target="_lank">Pasien Isoman</a> Theme By <a href="https://www.creative-tim.com"
                                 class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
                         </div>
+                    </marquee>
                     </div>
                 </div>
             </footer>
