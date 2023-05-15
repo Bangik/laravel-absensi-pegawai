@@ -14,6 +14,14 @@ Buat Akitivitas Kerja - {{ $site_name }}
               <form action=" {{ route('aktivitas-kerja.store') }} " method="post" enctype="multipart/form-data">
                   @csrf
                   <div class="form-group">
+                    <label for="work_location">Pilihan Lokasi Kerja</label>
+                    <select name="work_location" id="work_location" class="form-control @error('work_location') is-invalid @enderror">
+                    <option value="Luar Ruangan">Kerja di Luar</option>
+                    <option value="Dalam Ruangan">Kerja di Dalam</option>
+                </select>
+                    @error('work_location')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                </div>
+                  <div class="form-group">
                       <label for="activity">Aktivitas</label>
                       <textarea name="activity" id="activity" cols="30" rows="10" class="form-control @error('activity') is-invalid @enderror">{{old('activity')}}</textarea>
                       @error('activity')<div class="invalid-feedback">{{ $message }}</div>@enderror
